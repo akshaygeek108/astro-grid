@@ -12,30 +12,24 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div class="row">
-        <div class="col-md-3">
-           <mat-form-field appearance="outline" class="planet-select col-md-3">
+  <div class="filter-row">
+           <mat-form-field appearance="outline" class="filter-select">
           <mat-label>House</mat-label>
           <mat-select multiple [(value)]="selectedHouses" (selectionChange)="applyFilters()">
             <mat-option *ngFor="let h of houses" [value]="h">{{ h }}</mat-option>
           </mat-select>
         </mat-form-field>
-        </div>
-         <div class="col-md-3">
-              <mat-form-field appearance="outline" class="planet-select">
+      
+       
+              <mat-form-field appearance="outline" class="filter-select">
           <mat-label>Planet</mat-label>
           <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="applyFilters()">
             <mat-option *ngFor="let p of planets" [value]="p">{{ p }}</mat-option>
           </mat-select>
         </mat-form-field>
-         </div>
+        
       
-
-      
-      </div>
-
-      <div class="button-row">
-        <button mat-stroked-button color="accent" (click)="clearFilters()">
+ <button mat-stroked-button color="accent" (click)="clearFilters()">
           <mat-icon>clear</mat-icon>
           Clear
         </button>
@@ -43,7 +37,10 @@
           <mat-icon>refresh</mat-icon>
           Load All
         </button>
+      
       </div>
+
+     
 
       <div *ngIf="filtered.length === 0" class="message-row">
         Select one or more houses or planets to view the age table.

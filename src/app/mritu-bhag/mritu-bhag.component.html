@@ -14,14 +14,14 @@
 
     <mat-card-content>
       <div class="filter-row">
-        <mat-form-field appearance="fill" class="filter-select">
+        <mat-form-field appearance="outline" class="filter-select">
           <mat-label>Planets</mat-label>
           <mat-select [(value)]="selectedPlanets" (selectionChange)="onSelectionChange()" multiple>
             <mat-option *ngFor="let planet of allPlanets" [value]="planet">{{ planet }}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="filter-select">
+        <mat-form-field appearance="outline" class="filter-select">
           <mat-label>Degrees</mat-label>
           <mat-select [(value)]="selectedDegrees" (selectionChange)="onSelectionChange()" multiple>
             <mat-option *ngFor="let degree of allDegrees" [value]="degree">{{ degree }}</mat-option>
