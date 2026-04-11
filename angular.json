@@ -23,12 +23,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
-            "baseHref": "/astro-grid/"
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "budgets": []
+              "budgets": [],
+              "baseHref": "/astro-grid/"
             }
           }
         },
