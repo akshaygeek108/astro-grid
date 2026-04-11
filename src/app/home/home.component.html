@@ -11,8 +11,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Planet</mat-label>
-        <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="onPlanetSelectionChange($event)">
-          <mat-option value="select-all">Select All</mat-option>
+        <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="applyFilters()">
           <mat-option *ngFor="let p of planets" [value]="p">{{p}}</mat-option>
         </mat-select>
       </mat-form-field>
