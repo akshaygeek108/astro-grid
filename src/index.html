@@ -3,10 +3,18 @@
 <head>
   <meta charset="utf-8">
   <title>Astro Grid</title>
-  <base href="/">
+  <base href="/astro-grid/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    // Handle GitHub Pages 404 redirect
+    if (sessionStorage.redirect) {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      window.history.replaceState(null, null, redirect);
+    }
+  </script>
 </head>
 <body>
   <app-root></app-root>
