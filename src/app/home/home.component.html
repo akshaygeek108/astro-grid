@@ -1,0 +1,45 @@
+<div class="container">
+  <mat-card>
+    <h3>Filters</h3>
+    <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap">
+      <mat-form-field appearance="fill">
+        <mat-label>House</mat-label>
+        <mat-select multiple [(value)]="selectedHouses" (selectionChange)="applyFilters()">
+          <mat-option *ngFor="let h of houses" [value]="h">{{h}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Planet</mat-label>
+        <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="applyFilters()">
+          <mat-option *ngFor="let p of planets" [value]="p">{{p}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-stroked-button color="accent" (click)="clearFilters()">
+        <mat-icon>clear</mat-icon>
+        Clear
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-card style="margin-top:16px">
+    <h3>Results</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>House</th>
+          <th>Planet</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of filtered">
+          <td>{{r.house}}</td>
+          <td>{{r.planet}}</td>
+          <td>{{r.year}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card>
+</div>

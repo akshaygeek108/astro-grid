@@ -1,0 +1,11 @@
+/* Layout styles for sidenav + content */
+.main-content { padding: 16px; min-height: calc(100vh - 128px); }
+mat-card { padding: 12px; }
+mat-form-field { min-width: 180px; }
+.container { max-width: 900px; margin: 24px auto; }
+
+.app-footer {
+	background: #f0f0f0;
+	padding: 16px;
+	text-align: center;
+}

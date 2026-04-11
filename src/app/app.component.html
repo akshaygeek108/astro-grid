@@ -1,0 +1,23 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav mode="side" opened>
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/"> <mat-icon>home</mat-icon> &nbsp; Home</a>
+      <a mat-list-item routerLink="/about"> <mat-icon>info</mat-icon> &nbsp; About</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>Astro Grid</span>
+    </mat-toolbar>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+
+    <footer class="app-footer">
+      <small>© Astro Grid</small>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
