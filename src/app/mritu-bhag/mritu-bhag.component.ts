@@ -48,7 +48,7 @@ export class MrituBhagComponent implements OnInit {
   }
 toggleSelectAll(){
    if (this.allSelected) {
-      this.allDegrees = [];
+      this.selectedDegrees = [];
     } else {
       this.selectedDegrees = [...this.allDegrees];
     }
