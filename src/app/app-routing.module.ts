@@ -3,11 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { MrituBhagComponent } from './mritu-bhag/mritu-bhag.component';
+import { PlanetDurationComponent } from './planet-duration/planet-duration.component';
+import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'mritu-bhag', component: MrituBhagComponent },
+  { path: 'planet-duration', component: PlanetDurationComponent },
+  { path: 'chandra-navmansha', component: ChandraNavmanshaComponent },
   { path: '**', redirectTo: '' }
 ];
 

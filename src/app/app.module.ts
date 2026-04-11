@@ -20,9 +20,11 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MrituBhagComponent } from './mritu-bhag/mritu-bhag.component';
+import { PlanetDurationComponent } from './planet-duration/planet-duration.component';
+import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
