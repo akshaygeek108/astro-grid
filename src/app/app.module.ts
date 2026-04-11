@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -37,6 +38,7 @@ import { MrituBhagComponent } from './mritu-bhag/mritu-bhag.component';
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     AppRoutingModule
   ],
   providers: [],
