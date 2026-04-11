@@ -28,6 +28,13 @@
           </mat-select>
         </mat-form-field>
 
+         <mat-form-field appearance="outline" class="filter-select">
+          <mat-label>Sign</mat-label>
+          <mat-select [(value)]="selectedSigns" (selectionChange)="onSelectionChange()" multiple>
+            <mat-option *ngFor="let sign of allSigns" [value]="sign">{{ sign }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
          <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll()">
           {{ allSelected ? 'Clear All' : 'Select All' }}
         </button>
