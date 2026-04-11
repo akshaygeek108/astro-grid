@@ -35,4 +35,8 @@ jobs:
         with:
           path: ./dist/astro-app
 
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
       # The deploy step is handled by GitHub Pages Action once artifact is uploaded.
