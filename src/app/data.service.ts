@@ -15,4 +15,8 @@ export class DataService {
   getData(): Observable<AstroRecord[]> {
     return this.http.get<AstroRecord[]>('assets/data.json');
   }
+
+  getPlanetDurations(): Observable<[]> {
+    return this.http.get<[]>('assets/planet-durations.json');
+  }
 }

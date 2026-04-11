@@ -9,34 +9,52 @@
   <mat-card class="main-card">
     <mat-card-header>
       <mat-icon class="header-icon">schedule</mat-icon>
-      <mat-card-title>Coming Soon</mat-card-title>
+      <mat-card-title>Planet Duration Lookup</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
-      <div class="content-grid">
-        <div class="info-box">
-          <mat-icon class="box-icon">timer</mat-icon>
-          <h3>Dasha Timeline</h3>
-          <p>Understanding planetary periods and their durations</p>
-        </div>
-        
-        <div class="info-box">
-          <mat-icon class="box-icon">trending_up</mat-icon>
-          <h3>Period Effects</h3>
-          <p>How planetary periods influence your life events</p>
-        </div>
-        
-        <div class="info-box">
-          <mat-icon class="box-icon">public</mat-icon>
-          <h3>Planetary Positions</h3>
-          <p>Track planetary movements through different periods</p>
-        </div>
+      <div class="filter-row">
+        <mat-form-field appearance="fill" class="planet-select">
+          <mat-label>Planet</mat-label>
+          <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="onPlanetSelectionChange()">
+            <mat-option *ngFor="let planet of allPlanets" [value]="planet">{{ planet }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll()">
+          {{ allSelected ? 'Clear All' : 'Select All' }}
+        </button>
       </div>
 
-      <div class="coming-soon-message">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>This feature is being prepared for you. Stay tuned!</p>
+      <div *ngIf="isLoading" class="loading-row">
+        <mat-spinner diameter="40"></mat-spinner>
       </div>
+
+      <div *ngIf="!isLoading && filteredData.length === 0" class="message-row">
+        Select one or more planets to view the duration table.
+      </div>
+
+      <div *ngIf="filteredData.length > 0" class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Planet</th>
+              <th>Natal Chart D1</th>
+              <th>Navasham D-9</th>
+              <th>Sashtiamsha D-60</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData">
+              <td>{{ row.planet }}</td>
+              <td>{{ row.natalChartD1 }}</td>
+              <td>{{ row.navanshD9 }}</td>
+              <td>{{ row.sashtiamshaD60 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
     </mat-card-content>
   </mat-card>
 </div>

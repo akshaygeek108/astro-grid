@@ -1,0 +1,11 @@
+[
+  { "planet": "SUN", "natalChartD1": "30 Days", "navanshD9": "3Days, 8Hrs", "sashtiamshaD60": "12Hrs" },
+  { "planet": "MOON", "natalChartD1": "2¼ Days", "navanshD9": "6½ Hrs", "sashtiamshaD60": "54 Min" },
+  { "planet": "MARS", "natalChartD1": "40 Days Approx.", "navanshD9": "4Days, 10½ Hrs", "sashtiamshaD60": "16 Hrs" },
+  { "planet": "MERCURY", "natalChartD1": "20 Days Approx.", "navanshD9": "2 Days, 5½ Hrs", "sashtiamshaD60": "10 Hrs Approx." },
+  { "planet": "JUPITER", "natalChartD1": "1 Year", "navanshD9": "1 Month, 10 Days", "sashtiamshaD60": "5 Days Approx." },
+  { "planet": "VENUS", "natalChartD1": "24 Days Approx.", "navanshD9": "2 Days, 16 Hrs", "sashtiamshaD60": "10 Hrs" },
+  { "planet": "SATURN", "natalChartD1": "2.5 Years", "navanshD9": "3 Months, 10 Days", "sashtiamshaD60": "15 Days" },
+  { "planet": "RAHU", "natalChartD1": "1.5 Years", "navanshD9": "2 Months, 2 Days", "sashtiamshaD60": "9 Days Approx." },
+  { "planet": "KETU", "natalChartD1": "1.5 Years", "navanshD9": "2 Months, 2 Days", "sashtiamshaD60": "9 Days Approx." }
+]
