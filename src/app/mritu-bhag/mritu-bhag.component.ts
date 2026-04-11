@@ -58,10 +58,14 @@ export class MrituBhagComponent implements OnInit {
       this.selectedPlanets.forEach(planet => {
         const row = [planet];
         this.selectedDegrees.forEach(degree => {
-          const exists = this.mrituBhagData.some(
+          const matchingItem = this.mrituBhagData.find(
             item => item.planet === planet && item.value === degree
           );
-          row.push(exists ? 'Yes' : 'No');
+          if (matchingItem) {
+            row.push(`Yes (${matchingItem.sign})`);
+          } else {
+            row.push('No');
+          }
         });
         this.resultGrid.push(row);
       });

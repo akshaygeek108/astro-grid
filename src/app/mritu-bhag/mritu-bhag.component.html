@@ -47,7 +47,7 @@
           <tbody>
             <tr *ngFor="let row of resultGrid; let i = index">
               <td *ngFor="let cell of row; let j = index"
-                  [class]="i === 0 ? 'header-cell' : (cell === 'Yes' ? 'mritu-yes' : cell === 'No' ? 'mritu-no' : 'header-cell')">
+                  [class]="i === 0 ? 'header-cell' : (cell.toString().startsWith('Yes') ? 'mritu-yes' : cell === 'No' ? 'mritu-no' : 'header-cell')">
                 {{ cell }}
               </td>
             </tr>
