@@ -23,7 +23,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "baseHref": "/astro-grid/"
           },
           "configurations": {
             "production": {
