@@ -5,38 +5,60 @@
     <p class="subtitle">Moon's Sub-Divisional Chart</p>
   </div>
 
-  <!-- Main Content -->
   <mat-card class="main-card">
     <mat-card-header>
       <mat-icon class="header-icon">nights_stay</mat-icon>
-      <mat-card-title>Coming Soon</mat-card-title>
+      <mat-card-title>Chandra Navmansha Age Table</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
-      <div class="content-grid">
-        <div class="info-box">
-          <mat-icon class="box-icon">public</mat-icon>
-          <h3>Lunar Divisions</h3>
-          <p>Deep dive into the 9-fold divisions of zodiac signs</p>
-        </div>
-        
-        <div class="info-box">
-          <mat-icon class="box-icon">psychology</mat-icon>
-          <h3>Mental State</h3>
-          <p>Understanding emotional and mental patterns through Moon</p>
-        </div>
-        
-        <div class="info-box">
-          <mat-icon class="box-icon">favorite</mat-icon>
-          <h3>Moon Analysis</h3>
-          <p>Comprehensive lunar influence on personality and destiny</p>
-        </div>
+      <div class="filter-row">
+        <mat-form-field appearance="outline" class="sign-select">
+          <mat-label>Sign</mat-label>
+          <mat-select multiple [(value)]="selectedSigns" (selectionChange)="onSignSelectionChange()">
+            <mat-option *ngFor="let sign of allSigns" [value]="sign">{{ sign }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll()">
+          {{ allSelected ? 'Clear All' : 'Select All' }}
+        </button>
       </div>
 
-      <div class="coming-soon-message">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>This feature is being prepared for you. Stay tuned!</p>
+      <div *ngIf="isLoading" class="loading-row">
+        <mat-spinner diameter="40"></mat-spinner>
       </div>
+
+      <div *ngIf="!isLoading && filteredData.length === 0" class="message-row">
+        Select one or more signs to view the age list.
+      </div>
+
+      <div *ngIf="filteredData.length > 0" class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Sign</th>
+              <th>Age 1st List</th>
+              <th>Age 2nd List</th>
+              <th>Age 3rd List</th>
+              <th>Age 4th List</th>
+              <th>Age 5th List</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData">
+              <td>{{ row.sign }}</td>
+              <td>{{ row.age1List }}</td>
+              <td>{{ row.age2List }}</td>
+              <td>{{ row.age3List }}</td>
+              <td>{{ row.age4List }}</td>
+              <td>{{ row.age5List }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
     </mat-card-content>
   </mat-card>
 </div>

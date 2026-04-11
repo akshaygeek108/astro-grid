@@ -52,11 +52,80 @@ mat-card-title {
   margin: 0;
 }
 
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  min-width: 200px;
+  width: 100%;
+  max-width: 250px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.data-table th {
+  background: #f0f4ff;
+  color: #333;
+  font-weight: 700;
+}
+
+.header-cell {
+  background: #f0f4ff;
+  color: #333;
+  font-weight: 700;
+  text-align: center;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(102, 126, 234, 0.08);
+}
+
+.mritu-yes {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.mritu-no {
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.message-row,
+.loading-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  color: #6c5b7b;
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  margin-bottom: 32px;
 }
 
 .info-box {
@@ -97,6 +166,7 @@ mat-card-title {
 mat-card-content {
   padding: 0;
 }
+
 
 .coming-soon-message {
   text-align: center;

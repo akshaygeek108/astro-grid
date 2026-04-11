@@ -1,0 +1,14 @@
+[
+  { "sign": "Aries", "age1List": "16", "age2List": "28", "age3List": "40", "age4List": "52", "age5List": "64" },
+  { "sign": "Taurus", "age1List": "17", "age2List": "29", "age3List": "41", "age4List": "53", "age5List": "65" },
+  { "sign": "Gemini", "age1List": "18", "age2List": "30", "age3List": "42", "age4List": "54", "age5List": "66" },
+  { "sign": "Cancer", "age1List": "19", "age2List": "31", "age3List": "43", "age4List": "55", "age5List": "67" },
+  { "sign": "Leo", "age1List": "20", "age2List": "32", "age3List": "44", "age4List": "56", "age5List": "68" },
+  { "sign": "Virgo", "age1List": "21", "age2List": "33", "age3List": "45", "age4List": "57", "age5List": "69" },
+  { "sign": "Libra", "age1List": "22", "age2List": "34", "age3List": "46", "age4List": "58", "age5List": "70" },
+  { "sign": "Scorpio", "age1List": "23", "age2List": "35", "age3List": "47", "age4List": "59", "age5List": "71" },
+  { "sign": "Sagittarius", "age1List": "24", "age2List": "36", "age3List": "48", "age4List": "60", "age5List": "72" },
+  { "sign": "Capricorn", "age1List": "25", "age2List": "37", "age3List": "49", "age4List": "61", "age5List": "73" },
+  { "sign": "Aquarius", "age1List": "26", "age2List": "38", "age3List": "50", "age4List": "62", "age5List": "74" },
+  { "sign": "Pisces", "age1List": "27", "age2List": "39", "age3List": "51", "age4List": "63", "age5List": "75" }
+]

@@ -1,50 +1,72 @@
 <div class="container">
-    <!-- Hero Section -->
+  <!-- Hero Section -->
   <div class="hero-section">
     <h1>Tamil Nadi Ages</h1>
     <p class="subtitle">Ancient Wisdom of Tamil Astrology</p>
   </div>
-  <mat-card>
-    <h3>Filters</h3>
-    <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap">
-      <mat-form-field appearance="fill">
-        <mat-label>House</mat-label>
-        <mat-select multiple [(value)]="selectedHouses" (selectionChange)="applyFilters()">
-          <mat-option *ngFor="let h of houses" [value]="h">{{h}}</mat-option>
-        </mat-select>
-      </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Planet</mat-label>
-        <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="applyFilters()">
-          <mat-option *ngFor="let p of planets" [value]="p">{{p}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-icon class="header-icon">history</mat-icon>
+      <mat-card-title>Age Lookup</mat-card-title>
+    </mat-card-header>
 
-      <button mat-stroked-button color="accent" (click)="clearFilters()">
-        <mat-icon>clear</mat-icon>
-        Clear
-      </button>
-    </div>
-  </mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-3">
+           <mat-form-field appearance="outline" class="planet-select col-md-3">
+          <mat-label>House</mat-label>
+          <mat-select multiple [(value)]="selectedHouses" (selectionChange)="applyFilters()">
+            <mat-option *ngFor="let h of houses" [value]="h">{{ h }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+         <div class="col-md-3">
+              <mat-form-field appearance="outline" class="planet-select">
+          <mat-label>Planet</mat-label>
+          <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="applyFilters()">
+            <mat-option *ngFor="let p of planets" [value]="p">{{ p }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+         </div>
+      
 
-  <mat-card style="margin-top:16px">
-    <h3>Results</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>House</th>
-          <th>Planet</th>
-          <th>Year</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let r of filtered">
-          <td>{{r.house}}</td>
-          <td>{{r.planet}}</td>
-          <td>{{r.year}}</td>
-        </tr>
-      </tbody>
-    </table>
+      
+      </div>
+
+      <div class="button-row">
+        <button mat-stroked-button color="accent" (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
+          Clear
+        </button>
+        <button mat-stroked-button color="primary" (click)="loadAllData()">
+          <mat-icon>refresh</mat-icon>
+          Load All
+        </button>
+      </div>
+
+      <div *ngIf="filtered.length === 0" class="message-row">
+        Select one or more houses or planets to view the age table.
+      </div>
+
+      <div *ngIf="filtered.length > 0" class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>House</th>
+              <th>Planet</th>
+              <th>Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of filtered">
+              <td>{{ r.house }}</td>
+              <td>{{ r.planet }}</td>
+              <td>{{ r.year }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
   </mat-card>
 </div>

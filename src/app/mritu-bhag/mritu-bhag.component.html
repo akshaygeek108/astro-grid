@@ -9,34 +9,53 @@
   <mat-card class="main-card">
     <mat-card-header>
       <mat-icon class="header-icon">schedule</mat-icon>
-      <mat-card-title>Coming Soon</mat-card-title>
+      <mat-card-title>Mritu Bhag Analysis</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
-      <div class="content-grid">
-        <div class="info-box">
-          <mat-icon class="box-icon">info</mat-icon>
-          <h3>Detailed Analysis</h3>
-          <p>Comprehensive analysis of the 8th house and its planetary influences</p>
-        </div>
-        
-        <div class="info-box">
-          <mat-icon class="box-icon">insights</mat-icon>
-          <h3>Planetary Details</h3>
-          <p>Understanding planetary positions and their astrological significance</p>
-        </div>
-        
-        <div class="info-box">
-          <mat-icon class="box-icon">psychology</mat-icon>
-          <h3>Life Insights</h3>
-          <p>Personal growth and transformation guidance</p>
-        </div>
+      <div class="filter-row">
+        <mat-form-field appearance="fill" class="filter-select">
+          <mat-label>Planets</mat-label>
+          <mat-select [(value)]="selectedPlanets" (selectionChange)="onSelectionChange()" multiple>
+            <mat-option *ngFor="let planet of allPlanets" [value]="planet">{{ planet }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="filter-select">
+          <mat-label>Degrees</mat-label>
+          <mat-select [(value)]="selectedDegrees" (selectionChange)="onSelectionChange()" multiple>
+            <mat-option *ngFor="let degree of allDegrees" [value]="degree">{{ degree }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="accent" (click)="clearSelections()">
+          <mat-icon>clear</mat-icon>
+          Clear
+        </button>
       </div>
 
-      <div class="coming-soon-message">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>This feature is being prepared for you. Stay tuned!</p>
+      <div *ngIf="isLoading" class="loading-row">
+        <mat-spinner diameter="40"></mat-spinner>
       </div>
+
+      <div *ngIf="!isLoading && resultGrid.length === 0" class="message-row">
+        Select planets and degrees to check Mritu Bhag combinations.
+      </div>
+
+      <div *ngIf="resultGrid.length > 0" class="table-wrapper">
+        <table class="data-table">
+          <tbody>
+            <tr *ngFor="let row of resultGrid; let i = index">
+              <td *ngFor="let cell of row; let j = index"
+                  [class]="i === 0 ? 'header-cell' : (cell === 'Yes' ? 'mritu-yes' : cell === 'No' ? 'mritu-no' : 'header-cell')">
+                {{ cell }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
     </mat-card-content>
   </mat-card>
 </div>

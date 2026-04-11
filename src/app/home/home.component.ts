@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.dataSvc.getData().subscribe(arr => {
       this.data = arr;
-      this.filtered = arr;
+      //this.filtered = arr;
       this.houses = Array.from(new Set(arr.map(x => x.house))).sort((a,b)=>a-b);
       this.planets = Array.from(new Set(arr.map(x => x.planet))).sort();
       // No planets selected by default
@@ -38,6 +38,12 @@ export class HomeComponent implements OnInit {
 
   clearFilters() {
     this.selectedHouses = [];
+    this.selectedPlanets = [];
+    this.filtered = [];
+  }
+
+  loadAllData(){
+     this.selectedHouses = [];
     this.selectedPlanets = [];
     this.filtered = this.data;
   }

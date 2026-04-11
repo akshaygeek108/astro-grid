@@ -1,10 +1,76 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+
+interface MrituBhagRow {
+  planet: string;
+  sign: string;
+  value: number;
+}
 
 @Component({
   selector: 'mritu-bhag',
   templateUrl: './mritu-bhag.component.html',
   styleUrls: ['./mritu-bhag.component.css']
 })
-export class MrituBhagComponent {
+export class MrituBhagComponent implements OnInit {
+  allPlanets: string[] = [];
+  allDegrees: number[] = [];
+  selectedPlanets: string[] = [];
+  selectedDegrees: number[] = [];
+  mrituBhagData: MrituBhagRow[] = [];
+  resultGrid: any[][] = [];
+  isLoading = true;
 
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.initializeDegrees();
+    this.loadMrituBhagData();
+  }
+
+  private initializeDegrees(): void {
+    this.allDegrees = Array.from({ length: 31 }, (_, i) => i); // 0 to 30
+  }
+
+  private loadMrituBhagData(): void {
+    this.http.get<MrituBhagRow[]>('assets/mrituBhagData.json').subscribe({
+      next: (data) => {
+        this.mrituBhagData = data;
+        this.allPlanets = [...new Set(data.map((item) => item.planet))].sort();
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+
+  onSelectionChange(): void {
+    this.resultGrid = [];
+
+    if (this.selectedPlanets.length > 0 && this.selectedDegrees.length > 0) {
+      // Create header row with degrees
+      const headerRow = ['Planet'];
+      headerRow.push(...this.selectedDegrees.map(deg => deg.toString()));
+      this.resultGrid.push(headerRow);
+
+      // Create data rows for each planet
+      this.selectedPlanets.forEach(planet => {
+        const row = [planet];
+        this.selectedDegrees.forEach(degree => {
+          const exists = this.mrituBhagData.some(
+            item => item.planet === planet && item.value === degree
+          );
+          row.push(exists ? 'Yes' : 'No');
+        });
+        this.resultGrid.push(row);
+      });
+    }
+  }
+
+  clearSelections(): void {
+    this.selectedPlanets = [];
+    this.selectedDegrees = [];
+    this.resultGrid = [];
+  }
 }
