@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
       this.filtered = arr;
       this.houses = Array.from(new Set(arr.map(x => x.house))).sort((a,b)=>a-b);
       this.planets = Array.from(new Set(arr.map(x => x.planet))).sort();
+      this.selectedPlanets = [...this.planets, 'select-all']; // Select all planets by default, including select-all
     });
   }
 
@@ -33,6 +34,16 @@ export class HomeComponent implements OnInit {
       const planetMatch = this.selectedPlanets.length ? this.selectedPlanets.includes(r.planet) : true;
       return houseMatch && planetMatch;
     });
+  }
+
+  onPlanetSelectionChange(event: any) {
+    const selected = event.value;
+    if (selected.includes('select-all')) {
+      this.selectedPlanets = [...this.planets, 'select-all'];
+    } else {
+      this.selectedPlanets = selected.filter(v => v !== 'select-all');
+    }
+    this.applyFilters();
   }
 
   clearFilters() {
