@@ -28,6 +28,9 @@
           </mat-select>
         </mat-form-field>
 
+         <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll()">
+          {{ allSelected ? 'Clear All' : 'Select All' }}
+        </button>
         <button mat-stroked-button color="accent" (click)="clearSelections()">
           <mat-icon>clear</mat-icon>
           Clear

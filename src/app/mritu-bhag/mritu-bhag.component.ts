@@ -27,7 +27,9 @@ export class MrituBhagComponent implements OnInit {
     this.initializeDegrees();
     this.loadMrituBhagData();
   }
-
+  get allSelected(): boolean {
+    return this.selectedDegrees.length === this.allDegrees.length && this.allDegrees.length > 0;
+  }
   private initializeDegrees(): void {
     this.allDegrees = Array.from({ length: 31 }, (_, i) => i); // 0 to 30
   }
@@ -44,7 +46,14 @@ export class MrituBhagComponent implements OnInit {
       }
     });
   }
-
+toggleSelectAll(){
+   if (this.allSelected) {
+      this.allDegrees = [];
+    } else {
+      this.selectedDegrees = [...this.allDegrees];
+    }
+    this.onSelectionChange();
+}
   onSelectionChange(): void {
     this.resultGrid = [];
 
