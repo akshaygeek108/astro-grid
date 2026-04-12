@@ -84,7 +84,21 @@ loadAgeHouseData(){
     }
 
     this.result = { years, months, days };
-     this.dateHouse = this.ageHouseData.filter((item) => item.age === this.result.years);
+    let roundedAge = this.result.years;
+
+// ✅ If more than 6 months -> round up
+if (this.result.months > 6) {
+  roundedAge++;
+}
+
+// ✅ If exactly 6 months, check days
+else if (this.result.months === 6 && this.result.days > 0) {
+  roundedAge++;
+}
+
+this.dateHouse = this.ageHouseData.filter(
+  (item) => item.age === roundedAge
+);
      
     this.showResult = true;
   }
