@@ -1,0 +1,14 @@
+[
+  { "house": 1, "houses": "Self, Fame", "lords": "Attitude to work, motives" },
+  { "house": 2, "houses": "Resources", "lords": "Group" },
+  { "house": 3, "houses": "Journeys", "lords": "Leave, Holiday" },
+  { "house": 4, "houses": "Office", "lords": "Personal Secretary" },
+  { "house": 5, "houses": "Promotion, Power", "lords": "Juniors, Subordinates" },
+  { "house": 6, "houses": "Staff Functions", "lords": "Staff support" },
+  { "house": 7, "houses": "Colleagues", "lords": "PR at work" },
+  { "house": 8, "houses": "Retirement, Job loss", "lords": "Unforeseen troubles" },
+  { "house": 9, "houses": "The Boss", "lords": "Adviser, Guides" },
+  { "house": 10, "houses": "Company", "lords": "Personal success" },
+  { "house": 11, "houses": "Friends in group", "lords": "Training and development" },
+  { "house": 12, "houses": "Secret enemies in group", "lords": "Mistakes and inability" }
+]

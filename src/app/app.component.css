@@ -9,3 +9,63 @@ mat-form-field { min-width: 180px; }
 	padding: 16px;
 	text-align: center;
 }
+mat-sidenav {
+  width: 240px;
+}
+
+@media (max-width: 768px) {
+  mat-sidenav {
+    width: 220px;
+  }
+}
+
+/* Base menu */
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin: 2px 0;
+  color: #333;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+mat-nav-list a:hover {
+  background: #eeeeee;
+}
+
+/* ✅ ACTIVE LINK (theme aligned) */
+.active-link {
+  background: rgba(63, 81, 181, 0.12) !important; /* light indigo */
+  color: #3f51b5 !important;
+  font-weight: 600;
+  position: relative;
+}
+
+/* Left indicator bar */
+.active-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: #3f51b5; /* primary color */
+}
+
+/* Icon color */
+.active-link mat-icon {
+  color: #3f51b5 !important;
+}
+
+/* Default icon */
+mat-nav-list mat-icon {
+  color: #555;
+}
+
+/* Sidebar background */
+mat-sidenav {
+  background: #f5f6fa;
+  border-right: 1px solid #e0e0e0;
+}

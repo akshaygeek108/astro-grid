@@ -1,18 +1,45 @@
 <mat-sidenav-container fullscreen>
-  <mat-sidenav mode="side" opened>
+
+  <!-- Side Nav -->
+  <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">
     <mat-toolbar color="primary">Menu</mat-toolbar>
+
     <mat-nav-list>
-      <a mat-list-item routerLink="/"> <mat-icon>history</mat-icon> &nbsp; Tamil Nadi Ages</a>
-      <a mat-list-item routerLink="/mritu-bhag"> <mat-icon>star</mat-icon> &nbsp; Mritu Bhag</a>
-      <a mat-list-item routerLink="/planet-duration"> <mat-icon>timer</mat-icon> &nbsp; Planet Duration</a>
-      <a mat-list-item routerLink="/chandra-navmansha"> <mat-icon>nights_stay</mat-icon> &nbsp; Chandra Navmansha</a>
-      <a mat-list-item routerLink="/about"> <mat-icon>info</mat-icon> &nbsp; About</a>
-    
+      <a mat-list-item routerLink="/" (click)="closeIfMobile()" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>history</mat-icon> &nbsp; Tamil Nadi Ages
+      </a>
+
+      <a mat-list-item routerLink="/mritu-bhag" (click)="closeIfMobile()" routerLinkActive="active-link">
+        <mat-icon>star</mat-icon> &nbsp; Mrityu Bhag
+      </a>
+
+      <a mat-list-item routerLink="/planet-duration" (click)="closeIfMobile()" routerLinkActive="active-link">
+        <mat-icon>timer</mat-icon> &nbsp; Planet Duration
+      </a>
+
+      <a mat-list-item routerLink="/chandra-navmansha" (click)="closeIfMobile()" routerLinkActive="active-link">
+        <mat-icon>nights_stay</mat-icon> &nbsp; Chandra Navamsa
+      </a>
+
+      <a mat-list-item routerLink="/dasamsa-house" (click)="closeIfMobile()" routerLinkActive="active-link">
+        <mat-icon>work</mat-icon> &nbsp; Dasamsa House
+      </a>
+
+      <a mat-list-item routerLink="/about" (click)="closeIfMobile()" routerLinkActive="active-link">
+        <mat-icon>info</mat-icon> &nbsp; About
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
+  <!-- Content -->
   <mat-sidenav-content>
+
+    <!-- Top Toolbar -->
     <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
       <span>Astro Grid</span>
     </mat-toolbar>
 
@@ -23,5 +50,7 @@
     <footer class="app-footer">
       <small>© Astro Grid</small>
     </footer>
+
   </mat-sidenav-content>
+
 </mat-sidenav-container>

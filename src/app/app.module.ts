@@ -22,9 +22,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { MrituBhagComponent } from './mritu-bhag/mritu-bhag.component';
 import { PlanetDurationComponent } from './planet-duration/planet-duration.component';
 import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha.component';
+import { DasamsHouseComponent } from './dasams-house/dasams-house.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -41,7 +43,7 @@ import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha
     MatButtonModule,
     MatDividerModule,
     MatProgressSpinnerModule,
-    AppRoutingModule
+    AppRoutingModule,MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

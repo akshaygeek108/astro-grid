@@ -1,0 +1,113 @@
+<div class="container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>Dasamsa House</h1>
+    <p class="subtitle">The House of Career, Reputation, and Life Achievements</p>
+  </div>
+
+  <!-- Main Content -->
+  <mat-card class="main-card">
+    <!-- <mat-card-header>
+      <mat-icon class="header-icon">schedule</mat-icon>
+      <mat-card-title>Mrityu Bhag Analysis</mat-card-title>
+    </mat-card-header> -->
+
+  <mat-tab-group>
+  <mat-tab label="Dasamsa House Significator 1">
+         <mat-card-content>
+      <div class="filter-row">
+        <mat-form-field appearance="outline" class="sign-select">
+          <mat-label>House</mat-label>
+          <mat-select multiple [(value)]="selectedHouse" (selectionChange)="onHouseSelectionChange()">
+            <mat-option *ngFor="let house of allHouse" [value]="house">{{ house }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll()">
+          {{ allSelected ? 'Clear All' : 'Select All' }}
+        </button>
+      </div>
+
+      <div *ngIf="isLoading" class="loading-row">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!isLoading && filteredData.length === 0" class="message-row">
+        Select one or more House to view the list.
+      </div>
+
+      <div *ngIf="filteredData.length > 0" class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>House</th> 
+              <th>Signifies</th>
+              <th>What we...</th>
+              <th>At Work</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData">
+              <td>{{ row.house }}</td>
+              <td>{{ row.signifies }}</td>
+              <td>{{ row.whatWe }}</td>
+              <td>{{ row.atWork }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+    </mat-card-content>     
+  </mat-tab>
+  <mat-tab label="Dasamsa House Significator 2">
+     <mat-card-content>
+      <div class="filter-row">
+        <mat-form-field appearance="outline" class="sign-select">
+          <mat-label>House</mat-label>
+          <mat-select multiple [(value)]="selectedHouse1" (selectionChange)="onHouseSelectionChange1()">
+            <mat-option *ngFor="let house of allHouse1" [value]="house">{{ house }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll1()">
+          {{ allSelected1 ? 'Clear All' : 'Select All' }}
+        </button>
+      </div>
+
+      <div *ngIf="isLoading1" class="loading-row">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!isLoading1 && filteredData1.length === 0" class="message-row">
+        Select one or more House to view the list.
+      </div>
+
+      <div *ngIf="filteredData1.length > 0" class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>House</th> 
+              <th>Houses</th>
+              <th>Lords</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData1">
+              <td>{{ row.house }}</td>
+              <td>{{ row.houses }}</td>
+              <td>{{ row.lords }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+    </mat-card-content>  
+  </mat-tab>
+
+</mat-tab-group>
+      
+   
+  </mat-card>
+</div>

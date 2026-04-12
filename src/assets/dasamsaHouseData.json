@@ -1,0 +1,74 @@
+[
+  {
+    "house": 1,
+    "signifies": "Ideals, Principles",
+    "whatWe": "What we are",
+    "atWork": "Reputation"
+  },
+  {
+    "house": 2,
+    "signifies": "Wealth, Money",
+    "whatWe": "What we own",
+    "atWork": "Finance"
+  },
+  {
+    "house": 3,
+    "signifies": "Enterprise, leave, vacation",
+    "whatWe": "Time to think",
+    "atWork": "Enterprise"
+  },
+  {
+    "house": 4,
+    "signifies": "Work environment or area",
+    "whatWe": "Where to work",
+    "atWork": "Office"
+  },
+  {
+    "house": 5,
+    "signifies": "Knowledge, subordinate",
+    "whatWe": "What we know",
+    "atWork": "Power"
+  },
+  {
+    "house": 6,
+    "signifies": "Service, staff, jobs",
+    "whatWe": "Who to work for",
+    "atWork": "Labor"
+  },
+  {
+    "house": 7,
+    "signifies": "Business, partner, self employment",
+    "whatWe": "Who to work with",
+    "atWork": "Business"
+  },
+  {
+    "house": 8,
+    "signifies": "Retirement, loans, insurance",
+    "whatWe": "When to stop",
+    "atWork": "Retire"
+  },
+  {
+    "house": 9,
+    "signifies": "Guide, boss, teacher",
+    "whatWe": "Who to listen to",
+    "atWork": "Guide"
+  },
+  {
+    "house": 10,
+    "signifies": "Status, success, the work",
+    "whatWe": "Work definition",
+    "atWork": "Status"
+  },
+  {
+    "house": 11,
+    "signifies": "Colleagues, friends, resources",
+    "whatWe": "Who will support",
+    "atWork": "Resources"
+  },
+  {
+    "house": 12,
+    "signifies": "Expenses, foreign, freedom",
+    "whatWe": "Our responsibility",
+    "atWork": "Liabilities"
+  }
+]

@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { MrituBhagComponent } from './mritu-bhag/mritu-bhag.component';
 import { PlanetDurationComponent } from './planet-duration/planet-duration.component';
 import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha.component';
+import { DasamsHouseComponent } from './dasams-house/dasams-house.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'mritu-bhag', component: MrituBhagComponent },
   { path: 'planet-duration', component: PlanetDurationComponent },
   { path: 'chandra-navmansha', component: ChandraNavmanshaComponent },
+  { path: 'dasamsa-house', component: DasamsHouseComponent },
   { path: '**', redirectTo: '' }
 ];
 
