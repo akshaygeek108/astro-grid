@@ -1,0 +1,73 @@
+[
+  { "house": 1, "age": 1 },
+  { "house": 1, "age": 13 },
+  { "house": 1, "age": 25 },
+  { "house": 1, "age": 37 },
+  { "house": 1, "age": 49 },
+
+  { "house": 2, "age": 2 },
+  { "house": 2, "age": 14 },
+  { "house": 2, "age": 26 },
+  { "house": 2, "age": 38 },
+  { "house": 2, "age": 50 },
+
+  { "house": 3, "age": 3 },
+  { "house": 3, "age": 15 },
+  { "house": 3, "age": 27 },
+  { "house": 3, "age": 39 },
+  { "house": 3, "age": 51 },
+
+  { "house": 4, "age": 4 },
+  { "house": 4, "age": 16 },
+  { "house": 4, "age": 28 },
+  { "house": 4, "age": 40 },
+  { "house": 4, "age": 52 },
+
+  { "house": 5, "age": 5 },
+  { "house": 5, "age": 17 },
+  { "house": 5, "age": 29 },
+  { "house": 5, "age": 41 },
+  { "house": 5, "age": 53 },
+
+  { "house": 6, "age": 6 },
+  { "house": 6, "age": 18 },
+  { "house": 6, "age": 30 },
+  { "house": 6, "age": 42 },
+  { "house": 6, "age": 54 },
+
+  { "house": 7, "age": 7 },
+  { "house": 7, "age": 19 },
+  { "house": 7, "age": 31 },
+  { "house": 7, "age": 43 },
+  { "house": 7, "age": 55 },
+
+  { "house": 8, "age": 8 },
+  { "house": 8, "age": 20 },
+  { "house": 8, "age": 32 },
+  { "house": 8, "age": 44 },
+  { "house": 8, "age": 56 },
+
+  { "house": 9, "age": 9 },
+  { "house": 9, "age": 21 },
+  { "house": 9, "age": 33 },
+  { "house": 9, "age": 45 },
+  { "house": 9, "age": 57 },
+
+  { "house": 10, "age": 10 },
+  { "house": 10, "age": 22 },
+  { "house": 10, "age": 34 },
+  { "house": 10, "age": 46 },
+  { "house": 10, "age": 58 },
+
+  { "house": 11, "age": 11 },
+  { "house": 11, "age": 23 },
+  { "house": 11, "age": 35 },
+  { "house": 11, "age": 47 },
+  { "house": 11, "age": 59 },
+
+  { "house": 12, "age": 12 },
+  { "house": 12, "age": 24 },
+  { "house": 12, "age": 36 },
+  { "house": 12, "age": 48 },
+  { "house": 12, "age": 60 }
+]
