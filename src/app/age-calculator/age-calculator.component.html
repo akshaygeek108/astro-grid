@@ -1,8 +1,8 @@
 <div class="container">
     <!-- Hero Section -->
     <div class="hero-section">
-        <h1>Age Calculator</h1>
-        <p class="subtitle">Calculate your age based on your birth date</p>
+        <h1>BCP Age Calculator</h1>
+        <p class="subtitle">Calculate the running age and cycle lords</p>
     </div>
 
     <mat-card class="main-card">
@@ -45,7 +45,7 @@
                                 <strong>{{ result.years }}</strong> Years,
                                 <strong>{{ result.months }}</strong> Months,
                                 <strong>{{ result.days }}</strong> Days
-                                <strong>{{dateHouse[0]?.house}}</strong> House
+                               
                             </p>
                         </div>
                         <div class="filter-row" *ngIf="showResult">
@@ -58,18 +58,18 @@
                     </mat-card-content>
                 </mat-card-content>
             </mat-tab>
-            <mat-tab label="BCP Age Calculator">
+            <mat-tab label="Cycle Lords">
                 <mat-card-content>
                     <mat-card-header>
                         <mat-icon class="header-icon">schedule</mat-icon>
-                        <mat-card-title>BCP Age Calculator</mat-card-title>
+                        <mat-card-title>Cycle Lords</mat-card-title>
                     </mat-card-header>
-                    <p>Calculate the running age and cycle lords</p>
+              
                     <div *ngIf="bcpAgeCalcuatorData.length > 0" class="table-wrapper">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Planet</th>
+                                    <th>Cycle Lord</th>
                                     <th>Year</th>
 
                                 </tr>
