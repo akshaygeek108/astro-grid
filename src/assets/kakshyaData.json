@@ -1,0 +1,10 @@
+[
+  { "kakshyaNumber": 1, "degrees": "0°00' - 3°45'", "lord": "SATURN" },
+  { "kakshyaNumber": 2, "degrees": "3°45' - 7°30'", "lord": "JUPITER" },
+  { "kakshyaNumber": 3, "degrees": "7°30' - 11°15'", "lord": "MARS" },
+  { "kakshyaNumber": 4, "degrees": "11°15' - 15°00'", "lord": "SUN" },
+  { "kakshyaNumber": 5, "degrees": "15°00' - 18°45'", "lord": "VENUS" },
+  { "kakshyaNumber": 6, "degrees": "18°45' - 22°30'", "lord": "MERCURY" },
+  { "kakshyaNumber": 7, "degrees": "22°30' - 26°15'", "lord": "MOON" },
+  { "kakshyaNumber": 8, "degrees": "26°15' - 30°00'", "lord": "LAGNA LORD (or SATURN / RAHU / KETU)" }
+]

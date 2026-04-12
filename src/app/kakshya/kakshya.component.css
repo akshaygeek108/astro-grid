@@ -7,11 +7,11 @@
 .hero-section {
   text-align: center;
   margin-bottom: 32px;
-  padding: 11px 16px;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #ffb347 0%, #ffcc80 100%);
   border-radius: 8px;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: #4a2c00;
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.2);
 }
 
 .hero-section h1 {
@@ -29,7 +29,9 @@
 
 .main-card {
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #fffaf3;
+  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.12);
+  border-radius: 8px;
 }
 
 mat-card-header {
@@ -44,12 +46,13 @@ mat-card-header {
   font-size: 32px;
   width: 32px;
   height: 32px;
-  color: #00f2fe;
+  color: #ff9800;
 }
 
 mat-card-title {
   font-size: 1.5rem;
   margin: 0;
+  color: #4a2c00;
 }
 
 
@@ -72,17 +75,17 @@ mat-card-title {
 .data-table td {
   padding: 14px 12px;
   text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #ffe0b2;
 }
 
 .data-table th {
-  background: #e8f5ff;
-  color: #333;
+  background: #ffe0b2;
+  color: #4a2c00;
   font-weight: 700;
 }
 
 .data-table tbody tr:hover {
-  background: rgba(0, 242, 254, 0.08);
+  background: rgba(255, 152, 0, 0.12);
 }
 
 .message-row,
@@ -91,7 +94,7 @@ mat-card-title {
   justify-content: center;
   align-items: center;
   min-height: 100px;
-  color: #6c5b7b;
+  color: #8a5a2b;
   font-size: 1rem;
   margin-bottom: 24px;
 }
@@ -104,35 +107,35 @@ mat-card-title {
 
 .info-box {
   padding: 20px;
-  background: #f5f7fa;
+  background: #fffaf3;
   border-radius: 8px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 4px solid #00f2fe;
+  border-left: 4px solid #ff9800;
 }
 
 .info-box:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.15);
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.18);
 }
 
 .box-icon {
   font-size: 40px;
   width: 40px;
   height: 40px;
-  color: #00f2fe;
+  color: #ff9800;
   margin-bottom: 12px;
 }
 
 .info-box h3 {
   font-size: 1.1rem;
   margin: 12px 0 8px 0;
-  color: #2c3e50;
+  color: #4a2c00;
 }
 
 .info-box p {
   font-size: 0.9rem;
-  color: #7f8c8d;
+  color: #7a4a1a;
   margin: 0;
   line-height: 1.5;
 }

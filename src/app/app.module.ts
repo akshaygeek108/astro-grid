@@ -24,9 +24,10 @@ import { PlanetDurationComponent } from './planet-duration/planet-duration.compo
 import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha.component';
 import { DasamsHouseComponent } from './dasams-house/dasams-house.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { KakshyaComponent } from './kakshya/kakshya.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

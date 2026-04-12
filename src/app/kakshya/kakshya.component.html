@@ -1,25 +1,25 @@
 <div class="container">
   <!-- Hero Section -->
   <div class="hero-section">
-    <h1>Planet Duration</h1>
-    <p class="subtitle">Planetary Periods & Dashas</p>
+    <h1>Kakshya</h1>
+    <p class="subtitle">Division, segment, sub-level, or layered structure</p>
   </div>
 
-  <!-- Main Content -->
   <mat-card class="main-card">
     <mat-card-header>
-      <mat-icon class="header-icon">schedule</mat-icon>
-      <mat-card-title>Planet Duration Lookup</mat-card-title>
+      <mat-icon class="header-icon">grid_view</mat-icon>
+      <mat-card-title>Kakshya Table</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
       <div class="filter-row">
         <mat-form-field appearance="outline" class="filter-select">
-          <mat-label>Planet</mat-label>
-          <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="onPlanetSelectionChange()">
-            <mat-option *ngFor="let planet of allPlanets" [value]="planet">{{ planet }}</mat-option>
+          <mat-label>Kakshya Number</mat-label>
+          <mat-select multiple [(value)]="selectedkakshyaNumber" (selectionChange)="onSignSelectionChange()">
+            <mat-option *ngFor="let kakshyaNumber of allkakshyaNumber" [value]="kakshyaNumber">{{ kakshyaNumber }}</mat-option>
           </mat-select>
         </mat-form-field>
+
         <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAll()">
           {{ allSelected ? 'Clear All' : 'Select All' }}
         </button>
@@ -30,25 +30,23 @@
       </div>
 
       <div *ngIf="!isLoading && filteredData.length === 0" class="message-row">
-        Select one or more planets to view the duration table.
+        Select one or more kakshya numbers to view the age list.
       </div>
 
       <div *ngIf="filteredData.length > 0" class="table-wrapper">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Planet</th>
-              <th>Natal Chart D1</th>
-              <th>Navasham D-9</th>
-              <th>Sashtiamsha D-60</th>
+              <th>Kakshya Number</th>
+              <th>Degrees</th>
+              <th>Kakshya Lord</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let row of filteredData">
-              <td>{{ row.planet }}</td>
-              <td>{{ row.natalChartD1 }}</td>
-              <td>{{ row.navanshD9 }}</td>
-              <td>{{ row.sashtiamshaD60 }}</td>
+              <td>{{ row.kakshyaNumber }}</td>
+              <td>{{ row.degrees }}</td>
+              <td>{{ row.lord }}</td>
             </tr>
           </tbody>
         </table>
