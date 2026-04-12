@@ -6,31 +6,34 @@
 
     <mat-nav-list>
       <a mat-list-item routerLink="/" (click)="closeIfMobile()" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
-        <mat-icon>history</mat-icon> &nbsp; Tamil Nadi Ages
+        <mat-icon class="aling-middle">history</mat-icon> &nbsp; Tamil Nadi Ages
       </a>
 
       <a mat-list-item routerLink="/mritu-bhag" (click)="closeIfMobile()" routerLinkActive="active-link">
-        <mat-icon>star</mat-icon> &nbsp; Mrityu Bhag
+        <mat-icon class="aling-middle">star</mat-icon> &nbsp; Mrityu Bhag
       </a>
 
       <a mat-list-item routerLink="/planet-duration" (click)="closeIfMobile()" routerLinkActive="active-link">
-        <mat-icon>timer</mat-icon> &nbsp; Planet Duration
+        <mat-icon class="aling-middle">timer</mat-icon> &nbsp; Planet Duration
       </a>
 
       <a mat-list-item routerLink="/chandra-navmansha" (click)="closeIfMobile()" routerLinkActive="active-link">
-        <mat-icon>nights_stay</mat-icon> &nbsp; Chandra Navamsa
+        <mat-icon class="aling-middle">nights_stay</mat-icon> &nbsp; Chandra Navamsa
       </a>
 
       <a mat-list-item routerLink="/dasamsa-house" (click)="closeIfMobile()" routerLinkActive="active-link">
-        <mat-icon>work</mat-icon> &nbsp; Dasamsa House
+        <mat-icon class="aling-middle">work</mat-icon> &nbsp; Dasamsa House
       </a>
 
       <a mat-list-item routerLink="/kakshya" (click)="closeIfMobile()" routerLinkActive="active-link">
-        <mat-icon>grid_view</mat-icon> &nbsp; Kakshya
+        <mat-icon class="aling-middle">grid_view</mat-icon> &nbsp; Kakshya
       </a>
 
+       <a mat-list-item routerLink="/age-calculator" (click)="closeIfMobile()" routerLinkActive="active-link">
+         <mat-icon class="aling-middle">calculate</mat-icon> &nbsp; Age Calculator
+      </a>
       <a mat-list-item routerLink="/about" (click)="closeIfMobile()" routerLinkActive="active-link">
-        <mat-icon>info</mat-icon> &nbsp; About
+        <mat-icon class="aling-middle">info</mat-icon> &nbsp; About
       </a>
     </mat-nav-list>
   </mat-sidenav>

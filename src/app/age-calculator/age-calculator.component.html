@@ -1,0 +1,54 @@
+<div class="container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1>Age Calculator</h1>
+    <p class="subtitle">Calculate your age based on your birth date</p>
+  </div>
+
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-icon class="header-icon">schedule</mat-icon>
+      <mat-card-title>Age List</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="filter-row">
+       <mat-form-field appearance="outline" class="filter-select">
+  <mat-label>Date of Birth</mat-label>
+
+  <input matInput placeholder="DD/MM/YYYY"
+         [matDatepicker]="picker"
+         [(ngModel)]="dob"
+         readonly>
+
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="calculateAge()">
+        <mat-icon>calculate</mat-icon>
+        Calculate
+      </button>
+
+      <button mat-stroked-button color="warn" (click)="clear()">
+        <mat-icon>delete</mat-icon>
+        Clear
+      </button>
+      </div>
+
+      <div class="filter-row">
+         <h2>Your Age </h2>   
+       
+
+        <p>
+          <strong>{{ result.years }}</strong> Years,
+          <strong>{{ result.months }}</strong> Months,
+          <strong>{{ result.days }}</strong> Days
+        </p>
+      </div>
+      
+
+      
+    </mat-card-content>
+  </mat-card>
+</div>

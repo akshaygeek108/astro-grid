@@ -69,3 +69,7 @@ mat-sidenav {
   background: #f5f6fa;
   border-right: 1px solid #e0e0e0;
 }
+
+.aling-middle{
+	vertical-align: middle;
+}

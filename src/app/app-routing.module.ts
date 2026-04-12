@@ -7,6 +7,7 @@ import { PlanetDurationComponent } from './planet-duration/planet-duration.compo
 import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha.component';
 import { DasamsHouseComponent } from './dasams-house/dasams-house.component';
 import { KakshyaComponent } from './kakshya/kakshya.component';
+import { AgeCalculatorComponent } from './age-calculator/age-calculator.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,8 +17,9 @@ const routes: Routes = [
   { path: 'chandra-navmansha', component: ChandraNavmanshaComponent },
   { path: 'dasamsa-house', component: DasamsHouseComponent },
   {path:'kakshya',component:KakshyaComponent},
+   {path:'age-calculator',component:AgeCalculatorComponent},
   
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' } 
 ];
 
 @NgModule({

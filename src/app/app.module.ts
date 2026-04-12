@@ -25,9 +25,13 @@ import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha
 import { DasamsHouseComponent } from './dasams-house/dasams-house.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { KakshyaComponent } from './kakshya/kakshya.component';
-
+import { AgeCalculatorComponent } from './age-calculator/age-calculator.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -36,6 +40,7 @@ import { KakshyaComponent } from './kakshya/kakshya.component';
     ReactiveFormsModule,
     MatToolbarModule,
     MatSelectModule,
+     MatInputModule,
     MatFormFieldModule,
     MatCardModule,
     MatSidenavModule,
@@ -44,9 +49,12 @@ import { KakshyaComponent } from './kakshya/kakshya.component';
     MatButtonModule,
     MatDividerModule,
     MatProgressSpinnerModule,
-    AppRoutingModule,MatTabsModule
+    MatDatepickerModule,
+    AppRoutingModule,MatTabsModule,MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+  { provide: MAT_DATE_LOCALE, useValue: 'en-IN' }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

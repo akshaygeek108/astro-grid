@@ -4,36 +4,41 @@
   padding: 0 16px;
 }
 
+/* 🌸 HERO SECTION (Soft pastel gradient) */
 .hero-section {
   text-align: center;
   margin-bottom: 32px;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, #ffb347 0%, #ffcc80 100%);
-  border-radius: 8px;
-  color: #4a2c00;
-  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.2);
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #fdf6ec 0%, #f3e9dc 100%);
+  border-radius: 12px;
+  color: #4a3b2a;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .hero-section h1 {
   font-size: 2.5rem;
   margin: 0 0 8px 0;
   font-weight: 600;
+  color: #3e2f22;
 }
 
 .subtitle {
   font-size: 1.1rem;
   margin: 0;
-  opacity: 0.9;
+  opacity: 0.8;
   font-style: italic;
+  color: #5a4a3b;
 }
 
+/* 🧾 MAIN CARD */
 .main-card {
   padding: 24px;
   background: #ffffff;
-  box-shadow: 0 2px 8px rgba(255, 140, 0, 0.12);
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 }
 
+/* 📌 HEADER */
 mat-card-header {
   display: flex;
   align-items: center;
@@ -46,20 +51,16 @@ mat-card-header {
   font-size: 32px;
   width: 32px;
   height: 32px;
-  color: #ff9800;
+  color: #7a6a5a;
 }
 
 mat-card-title {
   font-size: 1.5rem;
   margin: 0;
-  color: #4a2c00;
+  color: #3e2f22;
 }
 
-
-.select-all-button {
-  white-space: nowrap;
-}
-
+/* 📊 TABLE */
 .table-wrapper {
   overflow-x: auto;
   margin-bottom: 30px;
@@ -75,71 +76,99 @@ mat-card-title {
 .data-table td {
   padding: 14px 12px;
   text-align: left;
-  border-bottom: 1px solid #ffe0b2;
+  border-bottom: 1px solid #eee6dd;
 }
 
 .data-table th {
-  background: #ffe0b2;
-  color: #4a2c00;
+  background: #f6efe6;
+  color: #3e2f22;
   font-weight: 700;
 }
 
 .data-table tbody tr:hover {
-  background: rgba(255, 152, 0, 0.12);
+  background: #f9f4ee;
 }
 
+/* 📢 MESSAGE */
 .message-row,
 .loading-row {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100px;
-  color: #8a5a2b;
+  color: #7a6a5a;
   font-size: 1rem;
   margin-bottom: 24px;
 }
 
+/* 📦 GRID */
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
+/* 📌 INFO BOX */
 .info-box {
   padding: 20px;
-  background: #fffaf3;
-  border-radius: 8px;
+  background: #faf7f2;
+  border-radius: 12px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 4px solid #ff9800;
+  transition: all 0.3s ease;
+  border-left: 4px solid #c9b8a6;
 }
 
 .info-box:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.18);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .box-icon {
   font-size: 40px;
   width: 40px;
   height: 40px;
-  color: #ff9800;
+  color: #7a6a5a;
   margin-bottom: 12px;
 }
 
 .info-box h3 {
   font-size: 1.1rem;
   margin: 12px 0 8px 0;
-  color: #4a2c00;
+  color: #3e2f22;
 }
 
 .info-box p {
   font-size: 0.9rem;
-  color: #7a4a1a;
+  color: #6f5f50;
   margin: 0;
   line-height: 1.5;
 }
 
+/* 📄 CARD CONTENT */
 mat-card-content {
   padding: 0;
+}
+
+
+/* Result card */
+.result-card {
+  margin-top: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.result-card .icon {
+  font-size: 42px;
+  color: #ff9800;
+  margin-bottom: 10px;
+}
+
+.result-text h2 {
+  margin: 8px 0;
+}
+
+.result-text p {
+  font-size: 18px;
 }
