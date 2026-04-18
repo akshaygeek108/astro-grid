@@ -73,9 +73,9 @@ export class MrituBhagComponent implements OnInit {
   this.resultGrid = [];
 
   // Minimum requirement: planets + degrees
-  if (this.selectedPlanets.length === 0 || this.selectedDegrees.length === 0) {
-    return;
-  }
+  // if (this.selectedPlanets.length === 0 || this.selectedDegrees.length === 0) {
+  //   return;
+  // }
 
   // Header row
   const headerRow = ['Planet', ...this.selectedDegrees.map(d => d.toString())];

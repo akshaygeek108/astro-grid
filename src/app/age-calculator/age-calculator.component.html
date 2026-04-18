@@ -48,11 +48,25 @@
                                
                             </p>
                         </div>
-                        <div class="filter-row" *ngIf="showResult">
-                            <h2>House</h2>
-
-                            <p> <strong>{{dateHouse[0]?.house}}</strong> House</p>
-                        </div>
+                        
+                    <br/>
+                    <div *ngIf="filteredData.length > 0" class="table-wrapper">
+            <table class="data-table">
+            <thead>
+                <tr>
+                <th>House</th>
+                <th>Ages</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of filteredData">
+                <td>{{ row.house }}</td>
+                    <td>{{ row.ages }}</td>
+                </tr>
+            </tbody>
+            </table>
+      </div>
 
 
                     </mat-card-content>

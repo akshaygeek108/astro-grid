@@ -18,6 +18,7 @@ export class AgeCalculatorComponent {
   constructor(private http: HttpClient) {}
   dob: Date | null = null;
 ageHouseData: AgeHouseRow[] = [];
+filteredData: { house: number; ages: string }[] = [];
 bcpAgeCalcuatorData:bcpAgeCalcuatorRow[] = [];
 isLoading = true;
   result = {
@@ -36,6 +37,18 @@ loadAgeHouseData(){
       next: (data) => {
         this.ageHouseData = data; 
         this.isLoading = false;
+         const grouped: any = {};
+      data.forEach((item) => {
+        if(!grouped[item.house]){
+          grouped[item.house] = [];
+        }
+        grouped[item.house].push(item.age);
+      });
+       // Convert to array format your template expects
+  this.filteredData = Object.keys(grouped).map(house => ({
+    house: Number(house),
+    ages: grouped[house].join(', ')
+  }));
       },
       error: () => {
         this.isLoading = false;
@@ -45,7 +58,6 @@ loadAgeHouseData(){
     this.http.get<bcpAgeCalcuatorRow[]>('assets/bcpAgeData.json').subscribe({
       next: (data) => {
         this.bcpAgeCalcuatorData = data;
-      
       },
       error: () => {
       
@@ -54,6 +66,7 @@ loadAgeHouseData(){
 }
 
   calculateAge(): void {
+    debugger
     if (!this.dob) {
       this.showResult = false;
       return;
@@ -84,21 +97,21 @@ loadAgeHouseData(){
     }
 
     this.result = { years, months, days };
-    let roundedAge = this.result.years;
+//     let roundedAge = this.result.years;
 
-// ✅ If more than 6 months -> round up
-if (this.result.months > 6) {
-  roundedAge++;
-}
+// // ✅ If more than 6 months -> round up
+// if (this.result.months > 6) {
+//   roundedAge++;
+// }
 
-// ✅ If exactly 6 months, check days
-else if (this.result.months === 6 && this.result.days > 0) {
-  roundedAge++;
-}
+// // ✅ If exactly 6 months, check days
+// else if (this.result.months === 6 && this.result.days > 0) {
+//   roundedAge++;
+// }
 
-this.dateHouse = this.ageHouseData.filter(
-  (item) => item.age === roundedAge
-);
+// this.dateHouse = this.ageHouseData.filter(
+//   (item) => item.age === roundedAge
+// );
      
     this.showResult = true;
   }
