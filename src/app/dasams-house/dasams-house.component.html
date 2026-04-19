@@ -13,6 +13,56 @@
     </mat-card-header> -->
 
     <mat-tab-group (selectedTabChange)="onTabChange($event)" [(selectedIndex)]="tabIndex">
+      <mat-tab label="Dasamsa Devata">
+        <mat-card-content>
+          <div class="filter-row">
+            <mat-form-field appearance="outline" class="sign-select">
+              <mat-label>Planet</mat-label>
+              <mat-select multiple [(value)]="selectedPlanet" (selectionChange)="onPlanetSelectionChange()">
+                <mat-option *ngFor="let planet of allPlanet" [value]="planet">{{ planet }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAllPlanet()">
+              {{ allPlanetSelected ? 'Clear All' : 'Select All' }}
+            </button>
+          </div>
+
+
+          <div *ngIf="filterTab3Data.length === 0" class="message-row">
+            Select one or more Planet to view the list.
+          </div>
+          <div *ngIf="filterTab3Data.length > 0">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Digpala</th>
+                  <th>Planet</th>
+                  <th>Direction</th>
+                  <th>House</th>
+
+                  <th>Kala Graha</th>
+                  <th>Profession</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of filterTab3Data">
+                  <td>{{ row.digpala }}</td>
+                  <td>{{ row.planet }}</td>
+                  <td>{{ row.direction }}</td>
+                  <td>{{ row.house }}</td>
+
+                  <td>{{ row.kala_graha }}</td>
+                  <td>{{ row.profession }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </mat-card-content>
+      </mat-tab>
+
       <mat-tab label="Dasamsa House Significator 1">
         <mat-card-content>
           <div class="filter-row">
@@ -28,11 +78,11 @@
             </button>
           </div>
 
-          <div *ngIf="isLoading" class="loading-row">
+          <!-- <div *ngIf="isLoading" class="loading-row">
             <mat-spinner diameter="40"></mat-spinner>
-          </div>
+          </div> -->
 
-          <div *ngIf="!isLoading && filteredData.length === 0" class="message-row">
+          <div *ngIf="filteredData.length === 0" class="message-row">
             Select one or more House to view the list.
           </div>
 
@@ -103,53 +153,7 @@
 
         </mat-card-content>
       </mat-tab>
-      <mat-tab label="Dasamsa Devata">
-        <mat-card-content>
-          <div class="filter-row">
-            <mat-form-field appearance="outline" class="sign-select">
-              <mat-label>Planet</mat-label>
-              <mat-select multiple [(value)]="selectedPlanet" (selectionChange)="onPlanetSelectionChange()">
-                <mat-option *ngFor="let planet of allPlanet" [value]="planet">{{ planet }}</mat-option>
-              </mat-select>
-            </mat-form-field>
 
-            <button mat-stroked-button color="primary" class="select-all-button" (click)="toggleSelectAllPlanet()">
-              {{ allPlanetSelected ? 'Clear All' : 'Select All' }}
-            </button>
-          </div>
-
-
-          <div *ngIf="filterTab3Data.length === 0" class="message-row">
-            Select one or more Planet to view the list.
-          </div>
-          <div *ngIf="filterTab3Data.length > 0">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Planet</th>
-                  <th>Direction</th>
-                  <th>House</th>
-                  <th>Digpala</th>
-                  <th>Kala Graha</th>
-                  <th>Profession</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of filterTab3Data">
-                  <td>{{ row.planet }}</td>
-                  <td>{{ row.direction }}</td>
-                  <td>{{ row.house }}</td>
-                  <td>{{ row.digpala }}</td>
-                  <td>{{ row.kala_graha }}</td>
-                  <td>{{ row.profession }}</td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
-
-        </mat-card-content>
-      </mat-tab>
 
     </mat-tab-group>
 
