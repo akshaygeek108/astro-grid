@@ -1,0 +1,82 @@
+[
+  {
+    "planet": "Sun",
+    "direction": "East",
+    "house": 10,
+    "digpala": "Indra",
+    "kala_graha": "Sun",
+    "profession": "Politics, Government"
+  },
+  {
+    "planet": "Moon",
+    "direction": "NE",
+    "house": 4,
+    "digpala": "Vayu",
+    "kala_graha": "Saturn",
+    "profession": "Medicine"
+  },
+  {
+    "planet": "Mars",
+    "direction": "South",
+    "house": 10,
+    "digpala": "Yama",
+    "kala_graha": "Jupiter",
+    "profession": "Warriors, Army"
+  },
+  {
+    "planet": "Mercury",
+    "direction": "North",
+    "house": 1,
+    "digpala": "Soma",
+    "kala_graha": "Moon",
+    "profession": "Trader, Business"
+  },
+  {
+    "planet": "Jupiter",
+    "direction": "NE",
+    "house": 1,
+    "digpala": "Isana",
+    "kala_graha": "Rahu",
+    "profession": "Teacher, Judge, Jyotisa"
+  },
+  {
+    "planet": "Venus",
+    "direction": "SE",
+    "house": 4,
+    "digpala": "Agni",
+    "kala_graha": "Mars",
+    "profession": "Manager, Artist"
+  },
+  {
+    "planet": "Saturn",
+    "direction": "West",
+    "house": 7,
+    "digpala": "Varuna",
+    "kala_graha": "Venus",
+    "profession": "Labourer"
+  },
+  {
+    "planet": "Rahu",
+    "direction": "SW",
+    "house": 7,
+    "digpala": "Rakshasa",
+    "kala_graha": "Mercury",
+    "profession": "Hangman, Candala"
+  },
+  {
+    "planet": "Ketu",
+    "direction": "Upward",
+    "house": 10,
+    "digpala": "Ananta",
+    "kala_graha": "Lagna",
+    "profession": "Sage, Hermit"
+  },
+  {
+    "planet": "Lagna",
+    "direction": "Downward",
+    "house": "Vargottama",
+    "digpala": "Prajapati",
+    "kala_graha": "Ketu",
+    "profession": "Researcher"
+  }
+]
