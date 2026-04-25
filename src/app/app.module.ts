@@ -36,8 +36,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { KundliPlayGroundComponent } from './kundli-play-ground/kundli-play-ground.component';
 import { VenusChartComponent } from './venus-chart/venus-chart.component';
 import { SuryaChakraChartComponent } from './surya-chakra-chart/surya-chakra-chart.component';
+import { GuruChakraComponent } from './guru-chakra/guru-chakra.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent, VenusChartComponent, SuryaChakraChartComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent, VenusChartComponent, SuryaChakraChartComponent, GuruChakraComponent],
   imports: [
     BrowserModule,
     DragDropModule,
