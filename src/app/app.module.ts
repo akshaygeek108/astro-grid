@@ -34,8 +34,10 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TamilNadiComponent } from './tamil-nadi/tamil-nadi.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { KundliPlayGroundComponent } from './kundli-play-ground/kundli-play-ground.component';
+import { VenusChartComponent } from './venus-chart/venus-chart.component';
+import { SuryaChakraChartComponent } from './surya-chakra-chart/surya-chakra-chart.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent, VenusChartComponent, SuryaChakraChartComponent],
   imports: [
     BrowserModule,
     DragDropModule,

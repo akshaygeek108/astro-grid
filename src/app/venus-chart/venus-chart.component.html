@@ -1,0 +1,53 @@
+<mat-card-content class="layout">
+
+    <!-- KUNDLI CONTAINERS -->
+    <div class="kundli-containers">
+
+        <!-- Kundli 1 (Default) -->
+        <div class="kundli-box">
+            <h3>Kundli 1</h3>
+            <div #kundliContainer1 class="kundli-svg"></div>
+        </div>
+
+        <!-- Kundli 2 (Optional) -->
+        <div class="kundli-box" *ngIf="kundli2Enabled">
+            <h3>Kundli 2
+                <button class="delete-btn" (click)="deleteKundli()">✕</button>
+            </h3>
+            <div #kundliContainer2 class="kundli-svg"></div>
+        </div>
+
+        <!-- Add Kundli Button -->
+        <div class="kundli-box add-box" *ngIf="!kundli2Enabled">
+            <button class="add-kundli-btn" (click)="addKundli()">
+                + Add Kundli
+            </button>
+        </div>
+
+    </div>
+    <div class="pb-2">
+        <button mat-stroked-button color="warn" class="select-all-button" (click)="resetGrid()" class="reset-btn">
+            🔄 Reset Grid
+        </button>
+    </div>
+    <!-- Reset Button -->
+
+    <br />
+    <!-- PLANET PANEL -->
+    <div class="planet-panel">
+
+        <div *ngFor="let p of planets" class="planet-pill" draggable="true" (dragstart)="onDragStart($event, p, 1)">
+            {{ p.name }}
+        </div>
+
+    </div>
+
+    <div class="house-panel">
+
+        <div *ngFor="let p of houses" class="house-pill" draggable="true" (dragstart)="onDragStart($event, p, 1)">
+            {{ p.name }}
+        </div>
+
+    </div>
+
+</mat-card-content>
