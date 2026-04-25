@@ -183,6 +183,7 @@ export class SuryaChakraChartComponent {
       .attr('dominant-baseline', 'middle')
       .attr('font-size', '22px')
       .attr('font-weight', '600')
+      .style('pointer-events', 'none')
       .attr('fill', '#c2185b')   // pink style (you can change)
       .text('RASHI');
     const cell = size / 3;
@@ -306,6 +307,7 @@ export class SuryaChakraChartComponent {
   }
 
   onDrop(event: DragEvent, houseId: number, dropX?: number, dropY?: number, kundliId: number = 1) {
+    debugger
     event.preventDefault();
     console.log('Drop handler called for kundli:', kundliId, 'house:', houseId, 'at position:', dropX, dropY);
 
@@ -313,6 +315,10 @@ export class SuryaChakraChartComponent {
     console.log('Drop data:', data);
     if (!data) return;
 
+    if (houseId === 1) {
+      console.log('Drop not allowed in center');
+      return;
+    }
     const planet: Planet = JSON.parse(data);
     console.log('Parsed planet:', planet);
 
