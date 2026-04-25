@@ -256,7 +256,35 @@ export class GuruChakraComponent {
       .style('pointer-events', 'none')
       .text(this.centerLabels[kundliId] || '');
 
+    const houseValues = [
+      12, 1, 2, 3,
+      11, "", "", 4,
+      10, "", "", 5,
+      9, 8, 7, 6
+    ];
 
+    let index = 0;
+
+    for (let row = 0; row < 4; row++) {
+      for (let col = 0; col < 4; col++) {
+
+        const value = houseValues[index];
+        index++;
+        const x = col * cell + cell - 6;   // 🔥 bottom-right padding
+        const y = row * cell + cell - 4;   // 🔥 bottom padding
+        if (value === "") continue;
+
+        svg.append('text')
+          .attr('x', x)
+          .attr('y', y)
+          .attr('text-anchor', 'end')
+          .attr('dominant-baseline', 'alphabetic')
+          .attr('font-size', '12px')
+          .attr('font-weight', '500')
+          .attr('fill', '#5e0d35')
+          .text(value);
+      }
+    }
 
 
     svg.on('dblclick', (event: MouseEvent) => {
