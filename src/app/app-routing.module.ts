@@ -8,18 +8,23 @@ import { ChandraNavmanshaComponent } from './chandra-navmansha/chandra-navmansha
 import { DasamsHouseComponent } from './dasams-house/dasams-house.component';
 import { KakshyaComponent } from './kakshya/kakshya.component';
 import { AgeCalculatorComponent } from './age-calculator/age-calculator.component';
+import { TamilNadiComponent } from './tamil-nadi/tamil-nadi.component';
+import { KundliPlayGroundComponent } from './kundli-play-ground/kundli-play-ground.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'tamil-nadi', component: TamilNadiComponent },
   { path: 'about', component: AboutComponent },
   { path: 'mritu-bhag', component: MrituBhagComponent },
   { path: 'planet-duration', component: PlanetDurationComponent },
   { path: 'chandra-navmansha', component: ChandraNavmanshaComponent },
   { path: 'dasamsa-house', component: DasamsHouseComponent },
-  {path:'kakshya',component:KakshyaComponent},
-   {path:'age-calculator',component:AgeCalculatorComponent},
-  
-  { path: '**', redirectTo: '' } 
+  { path: 'kakshya', component: KakshyaComponent },
+  { path: 'age-calculator', component: AgeCalculatorComponent },
+  { path: 'kundli-play-ground', component: KundliPlayGroundComponent },
+
+
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

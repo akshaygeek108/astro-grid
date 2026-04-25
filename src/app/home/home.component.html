@@ -1,69 +1,52 @@
 <div class="container">
   <!-- Hero Section -->
   <div class="hero-section">
-    <h1>Tamil Nadi Ages</h1>
-    <p class="subtitle">Ancient Wisdom of Tamil Astrology</p>
+    <h1>Astro Grid</h1>
+    <p class="subtitle">Explore the cosmos through the lens of ancient astrology</p>
   </div>
 
   <mat-card class="main-card">
-    <mat-card-header>
-      <mat-icon class="header-icon">history</mat-icon>
-      <mat-card-title>Age Lookup</mat-card-title>
-    </mat-card-header>
 
     <mat-card-content>
-  <div class="filter-row">
-           <mat-form-field appearance="outline" class="filter-select">
-          <mat-label>House</mat-label>
-          <mat-select multiple [(value)]="selectedHouses" (selectionChange)="applyFilters()">
-            <mat-option *ngFor="let h of houses" [value]="h">{{ h }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      
-       
-              <mat-form-field appearance="outline" class="filter-select">
-          <mat-label>Planet</mat-label>
-          <mat-select multiple [(value)]="selectedPlanets" (selectionChange)="applyFilters()">
-            <mat-option *ngFor="let p of planets" [value]="p">{{ p }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        
-      
- <button mat-stroked-button color="accent" (click)="clearFilters()">
-          <mat-icon>clear</mat-icon>
-          Clear
+      <div class="filter-row">
+        <p>Welcome to Astro Grid! This is your gateway to a universe of astrological insights. Use the navigation menu
+          to explore various features like Tamil Nadi Ages, Mrityu Bhag, Planet Duration, and more. Each section offers
+          unique tools and information to help you understand the cosmic influences on your life. Dive in and discover
+          the secrets of the stars!</p>
+      </div>
+      <div class="filter-row">
+        <button mat-stroked-button color="primary" routerLink="/tamil-nadi">
+          <mat-icon>history</mat-icon>
+          Explore Tamil Nadi Ages
         </button>
-        <button mat-stroked-button color="primary" (click)="loadAllData()">
-          <mat-icon>refresh</mat-icon>
-          Load All
+        <button mat-stroked-button color="accent" routerLink="/mritu-bhag">
+          <mat-icon>star</mat-icon>
+          Discover Mrityu Bhag
         </button>
-      
+        <button mat-stroked-button color="warn" routerLink="/planet-duration">
+          <mat-icon>timer</mat-icon>
+          Check Planet Duration
+        </button>
+        <button mat-stroked-button color="primary" routerLink="/chandra-navmansha">
+          <mat-icon>nights_stay</mat-icon>
+          Analyze Chandra Navamsa
+        </button>
+        <button mat-stroked-button color="accent" routerLink="/dasamsa-house">
+          <mat-icon>work</mat-icon>
+          Explore Dasamsa House
+        </button>
+        <button mat-stroked-button color="warn" routerLink="/kakshya">
+          <mat-icon>grid_view</mat-icon>
+          View Kakshya
+        </button>
+        <button mat-stroked-button color="primary" routerLink="/age-calculator">
+          <mat-icon>calculate</mat-icon>
+          BCP Age Calculator
+        </button>
+
       </div>
 
-     
 
-      <div *ngIf="filtered.length === 0" class="message-row">
-        Select one or more houses or planets to view the age table.
-      </div>
-
-      <div *ngIf="filtered.length > 0" class="table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>House</th>
-              <th>Planet</th>
-              <th>Year</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let r of filtered">
-              <td>{{ r.house }}</td>
-              <td>{{ r.planet }}</td>
-              <td>{{ r.year }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </mat-card-content>
   </mat-card>
 </div>

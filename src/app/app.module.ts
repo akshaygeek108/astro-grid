@@ -29,18 +29,23 @@ import { AgeCalculatorComponent } from './age-calculator/age-calculator.componen
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { TamilNadiComponent } from './tamil-nadi/tamil-nadi.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { KundliPlayGroundComponent } from './kundli-play-ground/kundli-play-ground.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent],
   imports: [
     BrowserModule,
+    DragDropModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
     MatSelectModule,
-     MatInputModule,
+    MatInputModule,
     MatFormFieldModule,
     MatCardModule,
     MatSidenavModule,
@@ -50,11 +55,11 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
     MatDividerModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
-    AppRoutingModule,MatTabsModule,MatNativeDateModule
+    AppRoutingModule, MatTabsModule, MatNativeDateModule, MatChipsModule
   ],
   providers: [
-  { provide: MAT_DATE_LOCALE, useValue: 'en-IN' }
-],
+    { provide: MAT_DATE_LOCALE, useValue: 'en-IN' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

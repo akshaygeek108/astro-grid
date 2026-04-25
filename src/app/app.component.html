@@ -5,9 +5,15 @@
     <mat-toolbar color="primary">Menu</mat-toolbar>
 
     <mat-nav-list>
-      <a mat-list-item routerLink="/" (click)="closeIfMobile()" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a mat-list-item routerLink="/" (click)="closeIfMobile()" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon class="aling-middle">home</mat-icon> &nbsp; Home
+      </a>
+
+      <a mat-list-item routerLink="/tamil-nadi" (click)="closeIfMobile()" routerLinkActive="active-link">
         <mat-icon class="aling-middle">history</mat-icon> &nbsp; Tamil Nadi Ages
       </a>
+
 
       <a mat-list-item routerLink="/mritu-bhag" (click)="closeIfMobile()" routerLinkActive="active-link">
         <mat-icon class="aling-middle">star</mat-icon> &nbsp; Mrityu Bhag
@@ -29,8 +35,8 @@
         <mat-icon class="aling-middle">grid_view</mat-icon> &nbsp; Kakshya
       </a>
 
-       <a mat-list-item routerLink="/age-calculator" (click)="closeIfMobile()" routerLinkActive="active-link">
-         <mat-icon class="aling-middle">calculate</mat-icon> &nbsp;BCP Age Calculator
+      <a mat-list-item routerLink="/age-calculator" (click)="closeIfMobile()" routerLinkActive="active-link">
+        <mat-icon class="aling-middle">calculate</mat-icon> &nbsp;BCP Age Calculator
       </a>
       <a mat-list-item routerLink="/about" (click)="closeIfMobile()" routerLinkActive="active-link">
         <mat-icon class="aling-middle">info</mat-icon> &nbsp; About
