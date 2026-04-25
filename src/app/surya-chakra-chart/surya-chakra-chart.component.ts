@@ -22,7 +22,10 @@ interface PlanetInstance {
 export class SuryaChakraChartComponent {
   @ViewChild('kundliContainer1', { static: true }) container1!: ElementRef;
   @ViewChild('kundliContainer2') container2!: ElementRef;  // Not static - created dynamically
-
+  centerLabels: Record<number, string> = {
+    1: '',
+    2: ''
+  };
   planets = [
     { id: 'sun', name: 'Su' },        // ☉ Surya
     { id: 'moon', name: 'Mo' },       // ☽ Chandra
@@ -80,6 +83,7 @@ export class SuryaChakraChartComponent {
     }
     // Clear the container
     if (this.container2) {
+      this.centerLabels[2] = '';
       d3.select(this.container2.nativeElement).selectAll('*').remove();
     }
   }
@@ -175,17 +179,37 @@ export class SuryaChakraChartComponent {
       .attr('y2', (size * 2) / 3)
       .attr('stroke', 'orange')
       .attr('stroke-width', 2);
-
-    svg.append('text')
+    const centerText = svg.append('text')
       .attr('x', size / 2)
       .attr('y', size / 2)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('font-size', '22px')
       .attr('font-weight', '600')
+      .attr('fill', '#c2185b')
       .style('pointer-events', 'none')
-      .attr('fill', '#c2185b')   // pink style (you can change)
-      .text('RASHI');
+      .text(this.centerLabels[kundliId] || '');
+
+
+    svg.on('dblclick', (event: MouseEvent) => {
+      const cell = size / 3;
+
+      const x = event.offsetX;
+      const y = event.offsetY;
+
+      const isCenter =
+        x > cell && x < 2 * cell &&
+        y > cell && y < 2 * cell;
+
+      if (!isCenter) return;
+
+      const userText = prompt('Enter Rashi text:');
+
+      if (userText !== null) {
+        this.centerLabels[kundliId] = userText;  // 🔥 store per kundli
+        this.drawBase(kundliId);                 // 🔥 redraw ONLY that chart
+      }
+    });
     const cell = size / 3;
     // Top Left (0,0)
     svg.append('line')
