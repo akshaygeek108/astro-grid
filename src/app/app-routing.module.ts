@@ -10,6 +10,7 @@ import { KakshyaComponent } from './kakshya/kakshya.component';
 import { AgeCalculatorComponent } from './age-calculator/age-calculator.component';
 import { TamilNadiComponent } from './tamil-nadi/tamil-nadi.component';
 import { KundliPlayGroundComponent } from './kundli-play-ground/kundli-play-ground.component';
+import { KundliCompareComponent } from './kundli-compare/kundli-compare.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'kakshya', component: KakshyaComponent },
   { path: 'age-calculator', component: AgeCalculatorComponent },
   { path: 'kundli-play-ground', component: KundliPlayGroundComponent },
+  { path: 'kundli-compare', component: KundliCompareComponent },
 
 
   { path: '**', redirectTo: '' }

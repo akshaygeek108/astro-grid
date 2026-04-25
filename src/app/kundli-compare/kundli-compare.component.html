@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="hero-section">
+        <h1>Kundli Compare Play Ground</h1>
+        <p class="subtitle">Compare your kundli with others</p>
+    </div>
+</div>
+
+<mat-card class="main-card">
+    <div class="kundli-containers">
+
+        <div class="kundli-box" *ngIf="kundli1Enabled">
+            <h3>{{ kundliTitle1 }}
+                <button class="delete-btn" (click)="deleteKundli1()">✕</button>
+            </h3>
+            <div #kundliContainer1 class="kundli-svg"></div>
+        </div>
+
+        <div class="kundli-box add-box" *ngIf="!kundli1Enabled">
+
+
+            <button class="add-kundli-btn" (click)="addKundli1('diamondChartKundli', 'North India Chart')">
+                + Add North India Chart
+            </button>
+            <br />
+            <button class="add-kundli-btn" (click)="addKundli1('sunChartKundli', 'East India Chart')">
+                + Add East India Chart
+            </button>
+            <br />
+            <button class="add-kundli-btn" (click)="addKundli1('southIndianChartKundli', 'South India Chart')">
+                + Add South India Chart
+            </button>
+            <br />
+
+
+        </div>
+
+        <div class="kundli-box" *ngIf="kundli2Enabled">
+            <h3>{{ kundliTitle2 }}
+                <button class="delete-btn" (click)="deleteKundli()">✕</button>
+            </h3>
+            <div #kundliContainer2 class="kundli-svg"></div>
+        </div>
+
+        <!-- Add Kundli Button -->
+        <div class="kundli-box add-box" *ngIf="!kundli2Enabled">
+            <button class="add-kundli-btn" (click)="addKundli('diamondChartKundli', 'North India Chart')">
+                + Add North India Chart
+            </button>
+            <br />
+            <button class="add-kundli-btn" (click)="addKundli('sunChartKundli', 'East India Chart')">
+                + Add East India Chart
+            </button>
+            <br />
+            <button class="add-kundli-btn" (click)="addKundli('southIndianChartKundli', 'South India Chart')">
+                + Add South India Chart
+            </button>
+            <br />
+        </div>
+    </div>
+    <div class="pb-2">
+        <button mat-stroked-button color="warn" class="select-all-button" (click)="resetGrid()" class="reset-btn">
+            🔄 Reset Grid
+        </button>
+    </div>
+    <!-- Reset Button -->
+
+    <br />
+    <!-- PLANET PANEL -->
+    <div class="planet-panel">
+
+        <div *ngFor="let p of planets" class="planet-pill" draggable="true" (dragstart)="onDragStart($event, p, 1)">
+            {{ p.name }}
+        </div>
+
+    </div>
+
+</mat-card>
