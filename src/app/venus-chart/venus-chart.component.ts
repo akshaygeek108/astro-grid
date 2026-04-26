@@ -24,22 +24,7 @@ export class VenusChartComponent {
   @ViewChild('kundliContainer1', { static: true }) container1!: ElementRef;
   @ViewChild('kundliContainer2') container2!: ElementRef;  // Not static - created dynamically
 
-  houseNumberPositions: any[] = [
-    { id: 1, x: 200, y: 200 },
 
-    { id: 2, x: 200, y: 60 },
-    { id: 3, x: 340, y: 100 },
-    { id: 4, x: 360, y: 200 },
-    { id: 5, x: 340, y: 320 },
-    { id: 6, x: 200, y: 360 },
-    { id: 7, x: 60, y: 320 },
-    { id: 8, x: 40, y: 200 },
-    { id: 9, x: 60, y: 100 },
-
-    { id: 10, x: 150, y: 140 },
-    { id: 11, x: 250, y: 140 },
-    { id: 12, x: 150, y: 260 }
-  ];
   planets = [
     { id: 'sun', name: 'Su' },        // ☉ Surya
     { id: 'moon', name: 'Mo' },       // ☽ Chandra
@@ -74,10 +59,7 @@ export class VenusChartComponent {
   activeKundliId = 1;
 
   ngOnInit() {
-    const saved = localStorage.getItem('kundli-house-layout');
-    if (saved) {
-      this.houseNumberPositions = JSON.parse(saved);
-    }
+
   }
   ngAfterViewInit() {
     this.drawBase(1);
@@ -248,44 +230,9 @@ export class VenusChartComponent {
           .attr('y', d.y);
       })
       .on('end', () => {
-        self.saveLayout();
+
       });
-    svg.selectAll('.house-number')
-      .data(this.houseNumberPositions)
-      .enter()
-      .append('text')
-      .attr('class', 'house-number')
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle')
-      .attr('font-size', '14px')
-      .attr('font-weight', '700')
-      .attr('fill', '#333')
-      .style('cursor', 'move')
 
-      // 🔥 CRITICAL FIX
-      .style('pointer-events', 'fill')
-
-      .call(
-        d3.drag<SVGTextElement, any>()
-          .on('start', function () {
-            d3.select(this).raise();
-          })
-          .on('drag', function (event, d: any) {
-            d.x = event.x;
-            d.y = event.y;
-
-            d3.select(this)
-              .attr('x', d.x)
-              .attr('y', d.y);
-          })
-          .on('end', () => {
-            self.saveLayout();
-          })
-      )
-
-      .text(d => d.id);
 
     const self = this;
 
@@ -302,7 +249,7 @@ export class VenusChartComponent {
           .attr('y', d.y);
       })
       .on('end', function () {
-        self.saveLayout();
+
       });
 
     // FLATTEN ALL PLANETS
@@ -380,12 +327,7 @@ export class VenusChartComponent {
     //  this.renderPlanetsInHouses(svg, houseZones, kundliId);
   }
 
-  saveLayout() {
-    localStorage.setItem(
-      'kundli-house-layout',
-      JSON.stringify(this.houseNumberPositions)
-    );
-  }
+
 
   resetLayout() {
     localStorage.removeItem('kundli-house-layout');
