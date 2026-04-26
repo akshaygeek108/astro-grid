@@ -24,6 +24,22 @@ export class VenusChartComponent {
   @ViewChild('kundliContainer1', { static: true }) container1!: ElementRef;
   @ViewChild('kundliContainer2') container2!: ElementRef;  // Not static - created dynamically
 
+  houseNumberPositions: any[] = [
+    { id: 1, x: 200, y: 200 },
+
+    { id: 2, x: 200, y: 60 },
+    { id: 3, x: 340, y: 100 },
+    { id: 4, x: 360, y: 200 },
+    { id: 5, x: 340, y: 320 },
+    { id: 6, x: 200, y: 360 },
+    { id: 7, x: 60, y: 320 },
+    { id: 8, x: 40, y: 200 },
+    { id: 9, x: 60, y: 100 },
+
+    { id: 10, x: 150, y: 140 },
+    { id: 11, x: 250, y: 140 },
+    { id: 12, x: 150, y: 260 }
+  ];
   planets = [
     { id: 'sun', name: 'Su' },        // ☉ Surya
     { id: 'moon', name: 'Mo' },       // ☽ Chandra
@@ -57,6 +73,12 @@ export class VenusChartComponent {
 
   activeKundliId = 1;
 
+  ngOnInit() {
+    const saved = localStorage.getItem('kundli-house-layout');
+    if (saved) {
+      this.houseNumberPositions = JSON.parse(saved);
+    }
+  }
   ngAfterViewInit() {
     this.drawBase(1);
     if (this.kundli2Enabled) {
@@ -107,6 +129,7 @@ export class VenusChartComponent {
     if (this.kundli2Enabled) {
       this.drawBase(2);
     }
+    // this.resetLayout();
   }
 
   // Draw base for a specific kundli
@@ -211,8 +234,111 @@ export class VenusChartComponent {
       { id: 12, x: 50, y: 250, w: 50, h: 50 }     // Extra zone 3
     ];
 
+
+    const drag = d3.drag<SVGTextElement, any>()
+      .on('start', function () {
+        d3.select(this).raise();
+      })
+      .on('drag', function (event, d: any) {
+        d.x = event.x;
+        d.y = event.y;
+
+        d3.select(this)
+          .attr('x', d.x)
+          .attr('y', d.y);
+      })
+      .on('end', () => {
+        self.saveLayout();
+      });
+    svg.selectAll('.house-number')
+      .data(this.houseNumberPositions)
+      .enter()
+      .append('text')
+      .attr('class', 'house-number')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', '14px')
+      .attr('font-weight', '700')
+      .attr('fill', '#333')
+      .style('cursor', 'move')
+
+      // 🔥 CRITICAL FIX
+      .style('pointer-events', 'fill')
+
+      .call(
+        d3.drag<SVGTextElement, any>()
+          .on('start', function () {
+            d3.select(this).raise();
+          })
+          .on('drag', function (event, d: any) {
+            d.x = event.x;
+            d.y = event.y;
+
+            d3.select(this)
+              .attr('x', d.x)
+              .attr('y', d.y);
+          })
+          .on('end', () => {
+            self.saveLayout();
+          })
+      )
+
+      .text(d => d.id);
+
     const self = this;
 
+    const planetDrag = d3.drag<SVGTextElement, PlanetInstance>()
+      .on('start', function () {
+        d3.select(this).raise();
+      })
+      .on('drag', function (event, d: PlanetInstance) {
+        d.x = event.x;
+        d.y = event.y;
+
+        d3.select(this)
+          .attr('x', d.x)
+          .attr('y', d.y);
+      })
+      .on('end', function () {
+        self.saveLayout();
+      });
+
+    // FLATTEN ALL PLANETS
+    const allPlanets: PlanetInstance[] = [];
+    Object.values(this.kundlis[kundliId]).forEach(h =>
+      h.forEach(p => allPlanets.push(p))
+    );
+
+    // JOIN + ENTER
+    const planetsSel = svg.selectAll('.planet')
+      .data(allPlanets, (d: any) => d.instanceId);
+
+    // EXIT
+    planetsSel.exit().remove();
+
+    // ENTER
+    const enter = planetsSel.enter()
+      .append('text')
+      .attr('class', 'planet')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', '14px')
+      .attr('font-weight', '600')
+      .attr('fill', '#000')
+      .style('cursor', 'grab')
+      .style('user-select', 'none')
+      .style('pointer-events', 'all')
+      .call(planetDrag)
+      .text(d => d.name);
+
+    // UPDATE
+    planetsSel
+      .attr('x', d => d.x)
+      .attr('y', d => d.y);
     svg.selectAll('.dropzone')
       .data(houseZones)
       .enter()
@@ -223,37 +349,47 @@ export class VenusChartComponent {
       .attr('width', d => d.w)
       .attr('height', d => d.h)
       .attr('fill', 'transparent')
-      .attr('stroke', 'transparent')
-      .attr('data-house', d => d.id)
       .style('cursor', 'pointer')
-      .on('dragover', (event: DragEvent) => {
+      .style('pointer-events', 'none')   // ✅ MUST BE ALL
+
+    const svgNode = svg.node();
+
+    d3.select(svgNode)
+      .on('dragover', (event) => {
         event.preventDefault();
-        event.dataTransfer!.dropEffect = 'copy';
       })
-      .on('dragleave', function () {
-        d3.select(this).attr('fill', 'transparent');
-      })
-      .on('drop', function (event: DragEvent) {
+      .on('drop', (event: DragEvent) => {
         event.preventDefault();
-        const houseId = d3.select(this).attr('data-house');
 
-        // Get the drop position relative to the SVG
-        const svgElement = container.nativeElement.querySelector('svg');
-        if (!svgElement) return;
-        const svgRect = svgElement.getBoundingClientRect();
+        const rect = svgNode.getBoundingClientRect();
 
-        // Calculate position within the house zone
-        const dropX = event.clientX - svgRect.left;
-        const dropY = event.clientY - svgRect.top;
+        const viewBox = svg.attr('viewBox')!;
+        const [, , vbW, vbH] = viewBox.split(' ').map(Number);
 
-        console.log('Drop on kundli:', kundliId, 'house:', houseId, 'at position:', dropX, dropY);
-        if (houseId) {
-          self.onDrop(event, parseInt(houseId), dropX, dropY, kundliId);
-        }
+        const dropX = (event.clientX - rect.left) * (vbW / rect.width);
+        const dropY = (event.clientY - rect.top) * (vbH / rect.height);
+
+        // 🚀 NO ZONE CHECK — FREE DROP ANYWHERE
+        self.onDrop(event, 1, dropX, dropY, kundliId);
       });
 
+    svg.selectAll('.house-number')
+      .raise();
+
     // Render planets in houses
-    this.renderPlanetsInHouses(svg, houseZones, kundliId);
+    //  this.renderPlanetsInHouses(svg, houseZones, kundliId);
+  }
+
+  saveLayout() {
+    localStorage.setItem(
+      'kundli-house-layout',
+      JSON.stringify(this.houseNumberPositions)
+    );
+  }
+
+  resetLayout() {
+    localStorage.removeItem('kundli-house-layout');
+    location.reload();
   }
 
   // Render planets that have been dropped into houses
@@ -283,39 +419,33 @@ export class VenusChartComponent {
     });
   }
 
-  onDrop(event: DragEvent, houseId: number, dropX?: number, dropY?: number, kundliId: number = 1) {
+  onDrop(event: DragEvent, houseId: number, dropX: number, dropY: number, kundliId: number = 1) {
     event.preventDefault();
-    console.log('Drop handler called for kundli:', kundliId, 'house:', houseId, 'at position:', dropX, dropY);
 
     const data = event.dataTransfer?.getData('planet');
-    console.log('Drop data:', data);
     if (!data) return;
 
     const planet: Planet = JSON.parse(data);
-    console.log('Parsed planet:', planet);
 
-    // Remove planet from ANY house in the SAME kundli only (move logic within kundli)
+    // remove old position
     for (let h = 1; h <= 12; h++) {
-      this.kundlis[kundliId][h] = this.kundlis[kundliId][h].filter(
-        p => p.planetId !== planet.id
-      );
+      this.kundlis[kundliId][h] =
+        this.kundlis[kundliId][h].filter(p => p.planetId !== planet.id);
     }
 
-    // Create new instance in the target house at the drop position
+    // ✅ NO HOUSE VALIDATION — free placement
     const instance: PlanetInstance = {
       instanceId: crypto.randomUUID(),
       planetId: planet.id,
       name: planet.name,
       degree: 15,
-      x: dropX ?? 0,  // Use drop position or default to center
-      y: dropY ?? 0
+      x: dropX,
+      y: dropY
     };
 
-    // Add to target kundli's house
+    // optional: keep houseId only as "last dropped zone" or ignore it
     this.kundlis[kundliId][houseId].push(instance);
-    console.log('Planet added to kundli:', kundliId, 'house:', houseId, 'Total:', this.kundlis[kundliId][houseId].length);
 
-    // Redraw to show the planet in the house
     this.drawBase(kundliId);
   }
 }

@@ -94,6 +94,8 @@ export class KundliCompareComponent {
   // Delete second kundli
   deleteKundli() {
     this.kundli2Enabled = false;
+    this.chart2Type = '';
+    this.kundliTitle2 = '';
     // Clear kundli 2 data
     for (let houseId = 1; houseId <= 12; houseId++) {
       this.kundlis[2][houseId] = [];
@@ -107,6 +109,8 @@ export class KundliCompareComponent {
 
   deleteKundli1() {
     this.kundli1Enabled = false;
+    this.chart1Type = '';
+    this.kundliTitle1 = '';
     // Clear kundli 1 data
     for (let houseId = 1; houseId <= 12; houseId++) {
       this.kundlis[1][houseId] = [];

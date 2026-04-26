@@ -321,3 +321,49 @@ mat-card-content {
 .cdk-overlay-container {
     z-index: 9999 !important;
 }
+
+
+.house-panel {
+
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    border-top: 1px solid #ccc;
+    background: white;
+
+    z-index: 10;
+    /* ABOVE KUNDLI */
+}
+
+.house-pill {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(255, 182, 193, 0.18);
+    /* light pink */
+    border: 1px solid #f8a5c2;
+    cursor: grab;
+    user-select: none;
+    position: relative;
+    z-index: 20;
+    color: #c2185b;
+    /* deep pink text */
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.house-pill.placed {
+    color: #f54141;
+    /* Black when placed */
+    background: rgba(76, 175, 80, 0.15);
+    border-color: #81c784;
+}
+
+.house-pill:active {
+    cursor: grabbing;
+}
