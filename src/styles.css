@@ -18,7 +18,8 @@ body {
   border-collapse: collapse;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   border: 1px solid #ddd;
   padding: 8px;
 }
@@ -40,4 +41,12 @@ body {
   min-width: 200px;
   width: 100%;
   max-width: 250px;
+}
+
+.text-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6c5b7b;
+  font-size: 1rem;
 }

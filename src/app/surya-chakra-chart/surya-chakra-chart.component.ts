@@ -1,5 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
+
 interface Planet {
   id: string;
   name: string;
@@ -10,8 +11,16 @@ interface PlanetInstance {
   planetId: string;
   name: string;
   degree: number;
-  x: number;  // X position within the house
-  y: number; // Y position within the house
+  x: number;
+  y: number;
+}
+
+interface Zone {
+  id: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
 }
 
 @Component({
@@ -20,248 +29,239 @@ interface PlanetInstance {
   styleUrls: ['./surya-chakra-chart.component.css']
 })
 export class SuryaChakraChartComponent {
-  @ViewChild('kundliContainer1', { static: true }) container1!: ElementRef;
-  @ViewChild('kundliContainer2') container2!: ElementRef;  // Not static - created dynamically
-  centerLabels: Record<number, string> = {
-    1: '',
-    2: ''
-  };
-  planets = [
-    { id: 'sun', name: 'Su' },        // ☉ Surya
-    { id: 'moon', name: 'Mo' },       // ☽ Chandra
-    { id: 'mars', name: 'Ma' },       // ♂ Mangal
-    { id: 'mercury', name: 'Me' },    // ☿ Budh
-    { id: 'jupiter', name: 'Ju' },    // ♃ Guru
-    { id: 'venus', name: 'Ve' },      // ♀ Shukra
-    { id: 'saturn', name: 'Sa' },     // ♄ Shani
-    { id: 'rahu', name: 'Ra' },       // ☊ North Node
-    { id: 'ketu', name: 'Ke' },        // ☋ South Node
-    { id: 'ascendant', name: 'As' }        // ☋ South Node
+
+
+  planets: Planet[] = [
+    { id: 'sun', name: 'Su' },
+    { id: 'moon', name: 'Mo' },
+    { id: 'mars', name: 'Ma' },
+    { id: 'mercury', name: 'Me' },
+    { id: 'jupiter', name: 'Ju' },
+    { id: 'venus', name: 'Ve' },
+    { id: 'saturn', name: 'Sa' },
+    { id: 'rahu', name: 'Ra' },
+    { id: 'ketu', name: 'Ke' },
+    { id: 'ascendant', name: 'As' }
   ];
+  @ViewChild('kundliContainer1', { static: true }) container1!: ElementRef;
+  @ViewChild('kundliContainer2') container2!: ElementRef;
 
-  houses = [{ id: '1', name: '1' }, { id: '2', name: '2' }, { id: '3', name: '3' }, { id: '4', name: '4' }, { id: '5', name: '5' }, { id: '6', name: '6' }, { id: '7', name: '7' }, { id: '8', name: '8' }, { id: '9', name: '9' }, { id: '10', name: '10' }, { id: '11', name: '11' }, { id: '12', name: '12' }]
+  centerLabels: Record<number, string> = { 1: '', 2: '' };
 
-  // Two kundlis: kundli1 (default) and kundli2 (optional)
+  readonly SIZE = 400;
+
   kundli2Enabled = false;
 
   kundlis: Record<number, Record<number, PlanetInstance[]>> = {
-    1: {
-      1: [], 2: [], 3: [], 4: [],
-      5: [], 6: [], 7: [], 8: [],
-      9: [], 10: [], 11: [], 12: []
-    },
-    2: {
-      1: [], 2: [], 3: [], 4: [],
-      5: [], 6: [], 7: [], 8: [],
-      9: [], 10: [], 11: [], 12: []
-    }
+    1: this.createEmpty(),
+    2: this.createEmpty()
   };
-
-  activeKundliId = 1;
 
   ngAfterViewInit() {
     this.drawBase(1);
-    if (this.kundli2Enabled) {
-      this.drawBase(2);
-    }
+    if (this.kundli2Enabled) this.drawBase(2);
   }
 
-  // Add second kundli
+  // -------------------------
+  // INIT HELPERS
+  // -------------------------
+
+  private createEmpty() {
+    return Object.fromEntries(
+      Array.from({ length: 12 }, (_, i) => [i + 1, []])
+    ) as Record<number, PlanetInstance[]>;
+  }
+
+  // -------------------------
+  // KUNDLI MANAGEMENT
+  // -------------------------
+
   addKundli() {
-    if (!this.kundli2Enabled) {
-      this.kundli2Enabled = true;
-      setTimeout(() => this.drawBase(2), 0);
-    }
+    this.kundli2Enabled = true;
+    setTimeout(() => this.drawBase(2));
   }
 
-  // Delete second kundli
   deleteKundli() {
     this.kundli2Enabled = false;
-    // Clear kundli 2 data
-    for (let houseId = 1; houseId <= 12; houseId++) {
-      this.kundlis[2][houseId] = [];
-    }
-    // Clear the container
+    this.kundlis[2] = this.createEmpty();
+    this.centerLabels[2] = '';
+
     if (this.container2) {
-      this.centerLabels[2] = '';
       d3.select(this.container2.nativeElement).selectAll('*').remove();
     }
   }
 
-  // Custom drag start - only transfer text, not the element
-  onDragStart(event: DragEvent, planet: Planet, kundliId: number) {
-    console.log('Drag started:', planet.name, 'for kundli:', kundliId);
-    // Set drag data with kundli ID
-    event.dataTransfer?.setData('text/plain', planet.name);
-    event.dataTransfer?.setData('planet', JSON.stringify(planet));
-    event.dataTransfer?.setData('kundliId', kundliId.toString());
-    event.dataTransfer!.effectAllowed = 'copy';
-    event.dataTransfer!.dropEffect = 'copy';
-  }
-
-  // Reset both grids
   resetGrid() {
-    for (let k = 1; k <= 2; k++) {
-      for (let houseId = 1; houseId <= 12; houseId++) {
-        this.kundlis[k][houseId] = [];
-      }
-    }
+    this.kundlis = { 1: this.createEmpty(), 2: this.createEmpty() };
     this.drawBase(1);
-    if (this.kundli2Enabled) {
-      this.drawBase(2);
-    }
+    if (this.kundli2Enabled) this.drawBase(2);
   }
 
-  // Draw base for a specific kundli
+  // -------------------------
+  // DRAG START
+  // -------------------------
+
+  onDragStart(event: DragEvent, planet: Planet, kundliId: number) {
+    event.dataTransfer?.setData('planet', JSON.stringify(planet));
+  }
+
+  // -------------------------
+  // BASE RENDER
+  // -------------------------
+
   drawBase(kundliId: number = 1) {
-    const container = kundliId === 1 ? this.container1 : this.container2;
+    const container = this.getContainer(kundliId);
     if (!container) return;
 
-    const size = 400;
+    const size = this.SIZE;
 
-    // clear old render
+    const svg = this.createSvg(container, size);
+
+    this.drawGrid(svg, size);
+    this.drawDiagonals(svg, size);
+    this.drawCenter(svg, size, kundliId);
+    this.drawDropZones(svg, container, kundliId);
+    this.renderPlanets(svg, kundliId);
+  }
+
+  private getContainer(id: number) {
+    return id === 1 ? this.container1 : this.container2;
+  }
+
+  private createSvg(container: ElementRef, size: number) {
     d3.select(container.nativeElement).selectAll('*').remove();
 
-    const svg = d3.select(container.nativeElement)
+    return d3.select(container.nativeElement)
       .append('svg')
       .attr('width', size)
       .attr('height', size)
       .attr('viewBox', `0 0 ${size} ${size}`)
-      .attr('fill', 'none')
-      .attr('font-size', '14px')
-      .attr('font-family', 'Inter, Arial, sans-serif')
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle')
-      .attr('font-weight', '600')
-      .style('background', '#fffafc'); // soft pinkish background (easy on eyes)
+      .style('background', '#fffafc');
+  }
 
-    // 🟦 Square
+  // -------------------------
+  // GRID
+  // -------------------------
+
+  private drawGrid(svg: any, size: number) {
     svg.append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
       .attr('width', size)
       .attr('height', size)
       .attr('fill', 'none')
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
+      .attr('stroke', 'orange');
 
-    // 🔥 Vertical line 1 (1/3)
-    svg.append('line')
-      .attr('x1', size / 3)
-      .attr('y1', 0)
-      .attr('x2', size / 3)
-      .attr('y2', size)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
+    [1, 2].forEach(i => {
+      const pos = (size * i) / 3;
 
-    // 🔥 Vertical line 2 (2/3)
-    svg.append('line')
-      .attr('x1', (size * 2) / 3)
-      .attr('y1', 0)
-      .attr('x2', (size * 2) / 3)
-      .attr('y2', size)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
+      svg.append('line').attr('x1', pos).attr('y1', 0).attr('x2', pos).attr('y2', size).attr('stroke', 'orange');
+      svg.append('line').attr('x1', 0).attr('y1', pos).attr('x2', size).attr('y2', pos).attr('stroke', 'orange');
+    });
+  }
 
-    svg.append('line')
-      .attr('x1', 0)
-      .attr('y1', size / 3)
-      .attr('x2', size)
-      .attr('y2', size / 3)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
+  private drawDiagonals(svg: any, size: number) {
+    const c = size / 3;
 
-    // 🔥 Horizontal line 2 (2/3 height)
-    svg.append('line')
-      .attr('x1', 0)
-      .attr('y1', (size * 2) / 3)
-      .attr('x2', size)
-      .attr('y2', (size * 2) / 3)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
-    const centerText = svg.append('text')
-      .attr('x', size / 2)
-      .attr('y', size / 2)
+    const lines = [
+      [0, 0, c, c],
+      [size, 0, 2 * c, c],
+      [c, 2 * c, 0, size],
+      [2 * c, 2 * c, size, size]
+    ];
+
+    lines.forEach(([x1, y1, x2, y2]) => {
+      svg.append('line')
+        .attr('x1', x1)
+        .attr('y1', y1)
+        .attr('x2', x2)
+        .attr('y2', y2)
+        .attr('stroke', 'orange');
+    });
+  }
+
+  // -------------------------
+  // CENTER TEXT
+  // -------------------------
+  private drawCenter(svg: any, size: number, id: number) {
+
+    const textValue = this.centerLabels[id] || '';
+    const maxWidth = size / 3 - 12;
+    const lineHeight = 18;
+
+    const centerX = size / 2;
+    const centerY = size / 2;
+
+    const text = svg.append('text')
+      .attr('x', centerX)
+      .attr('y', centerY)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
-      .attr('font-size', '22px')
-      .attr('font-weight', '600')
+      .attr('font-size', '18px')
       .attr('fill', '#c2185b')
-      .style('pointer-events', 'none')
-      .text(this.centerLabels[kundliId] || '');
+      .style('pointer-events', 'none');
 
+    const words = textValue.split(/\s+/).filter(Boolean);
 
+    let line: string[] = [];
+    let lineNumber = 0;
+
+    const createTspan = (t: string, dy: number) => {
+      return text.append('tspan')
+        .attr('x', centerX)
+        .attr('dy', dy)
+        .text(t);
+    };
+
+    let tspan = createTspan('', 0);
+
+    words.forEach(word => {
+      line.push(word);
+
+      tspan.text(line.join(' '));
+
+      if (tspan.node()!.getComputedTextLength() > maxWidth) {
+        line.pop(); // remove last word
+
+        tspan.text(line.join(' '));
+
+        line = [word];
+        tspan = createTspan(word, lineNumber === 0 ? lineHeight : lineHeight);
+        lineNumber++;
+      }
+    });
+
+    // -------------------------
+    // DOUBLE CLICK (unchanged)
+    // -------------------------
     svg.on('dblclick', (event: MouseEvent) => {
       const cell = size / 3;
 
-      const x = event.offsetX;
-      const y = event.offsetY;
+      if (
+        event.offsetX < cell ||
+        event.offsetX > 2 * cell ||
+        event.offsetY < cell ||
+        event.offsetY > 2 * cell
+      ) return;
 
-      const isCenter =
-        x > cell && x < 2 * cell &&
-        y > cell && y < 2 * cell;
+      const input = prompt('Enter Rashi text (max 20 characters):');
 
-      if (!isCenter) return;
-
-      const userText = prompt('Enter Rashi text:');
-
-      if (userText !== null) {
-        this.centerLabels[kundliId] = userText;  // 🔥 store per kundli
-        this.drawBase(kundliId);                 // 🔥 redraw ONLY that chart
+      if (input !== null) {
+        const trimmed = input.length > 20 ? input.slice(0, 20) : input;
+        this.centerLabels[id] = trimmed;
+        this.drawBase(id);
       }
     });
-    const cell = size / 3;
-    // Top Left (0,0)
-    svg.append('line')
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('x2', cell)
-      .attr('y2', cell)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
+  }
 
-    svg.append('line')
-      .attr('x1', size)
-      .attr('y1', 0)
-      .attr('x2', 2 * cell)
-      .attr('y2', cell)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
+  // -------------------------
+  // DROP ZONES
+  // -------------------------
 
-    svg.append('line')
-      .attr('x1', cell)
-      .attr('y1', 2 * cell)
-      .attr('x2', 0)
-      .attr('y2', size)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
-
-    svg.append('line')
-      .attr('x1', 2 * cell)
-      .attr('y1', 2 * cell)
-      .attr('x2', size)
-      .attr('y2', size)
-      .attr('stroke', 'orange')
-      .attr('stroke-width', 2);
-    const houseZones = [
-      { id: 1, x: 150, y: 150, w: 100, h: 100 },  // Center
-      { id: 2, x: 150, y: 0, w: 100, h: 100 },    // Top center
-      { id: 3, x: 300, y: 0, w: 100, h: 200 },    // Top right (large)
-      { id: 4, x: 300, y: 150, w: 100, h: 100 },  // Right center
-      { id: 5, x: 300, y: 300, w: 100, h: 100 },  // Bottom right
-      { id: 6, x: 150, y: 300, w: 100, h: 100 },  // Bottom center
-      { id: 7, x: 0, y: 300, w: 100, h: 100 },    // Bottom left
-      { id: 8, x: 0, y: 150, w: 100, h: 100 },    // Left center
-      { id: 9, x: 0, y: 0, w: 100, h: 100 },      // Top left
-      { id: 10, x: 250, y: 50, w: 50, h: 50 },    // Extra zone 1
-      { id: 11, x: 250, y: 250, w: 50, h: 50 },   // Extra zone 2
-      { id: 12, x: 50, y: 250, w: 50, h: 50 }     // Extra zone 3
-    ];
-
+  private drawDropZones(svg: any, container: ElementRef, kundliId: number) {
+    const zones: Zone[] = this.getZones();
     const self = this;
 
     svg.selectAll('.dropzone')
-      .data(houseZones)
+      .data(zones)
       .enter()
       .append('rect')
       .attr('class', 'dropzone')
@@ -270,104 +270,99 @@ export class SuryaChakraChartComponent {
       .attr('width', d => d.w)
       .attr('height', d => d.h)
       .attr('fill', 'transparent')
-      .attr('stroke', 'transparent')
-      .attr('data-house', d => d.id)
-      .style('cursor', 'pointer')
-      .on('dragover', (event: DragEvent) => {
-        event.preventDefault();
-        event.dataTransfer!.dropEffect = 'copy';
-      })
-      .on('dragleave', function () {
-        d3.select(this).attr('fill', 'transparent');
-      })
-      .on('drop', function (event: DragEvent) {
-        event.preventDefault();
-        const houseId = d3.select(this).attr('data-house');
+      .on('dragover', (e: DragEvent) => e.preventDefault())
+      .on('drop', function (event: DragEvent, d: Zone) {
 
-        // Get the drop position relative to the SVG
         const svgElement = container.nativeElement.querySelector('svg');
-        if (!svgElement) return;
-        const svgRect = svgElement.getBoundingClientRect();
+        const rect = svgElement.getBoundingClientRect();
 
-        // Calculate position within the house zone
-        const dropX = event.clientX - svgRect.left;
-        const dropY = event.clientY - svgRect.top;
+        const dropX = event.clientX - rect.left;
+        const dropY = event.clientY - rect.top;
 
-        console.log('Drop on kundli:', kundliId, 'house:', houseId, 'at position:', dropX, dropY);
-        if (houseId) {
-          self.onDrop(event, parseInt(houseId), dropX, dropY, kundliId);
-        }
+        self.onDrop(event, d.id, dropX, dropY, kundliId);
       });
-
-    // Render planets in houses
-    this.renderPlanetsInHouses(svg, houseZones, kundliId);
   }
 
-  // Render planets that have been dropped into houses
-  renderPlanetsInHouses(svg: any, houseZones: any[], kundliId: number) {
-    const planetsInHouses = this.kundlis[kundliId];
+  // -------------------------
+  // PLANETS RENDER
+  // -------------------------
 
-    houseZones.forEach(zone => {
-      const planets = planetsInHouses[zone.id] || [];
-      if (planets.length === 0) return;
+  private renderPlanets(svg: any, kundliId: number) {
+    const zones = this.getZones();
+    const data = this.kundlis[kundliId];
 
-      planets.forEach((planet: PlanetInstance) => {
-        // Use the stored position if available, otherwise use center
-        const x = planet.x > 0 ? planet.x : zone.x + (zone.w / 2);
-        const y = planet.y > 0 ? planet.y : zone.y + (zone.h / 2);
+    zones.forEach(zone => {
+      const planets = data[zone.id] || [];
+
+      planets.forEach((p, index) => {
+
+        const drag = d3.drag()
+          .on('drag', function (event: any) {
+            d3.select(this)
+              .attr('x', event.x)
+              .attr('y', event.y);
+          })
+          .on('end', function (event: any) {
+            p.x = event.x;
+            p.y = event.y;
+            data[zone.id][index] = p;
+          });
 
         svg.append('text')
-          .attr('x', x)
-          .attr('y', y)
-          .attr('text-anchor', 'middle')
-          .attr('dominant-baseline', 'middle')
-          .attr('font-size', '14px')
-          .attr('font-weight', '600')
-          .attr('fill', '#000000')
-          .style('pointer-events', 'none')
-          .text(planet.name);
+          .attr('x', p.x || zone.x + zone.w / 2)
+          .attr('y', p.y || zone.y + zone.h / 2)
+          .text(p.name)
+          .style('cursor', 'grab')
+          .call(drag);
       });
     });
   }
 
+  // -------------------------
+  // DROP HANDLER
+  // -------------------------
+
   onDrop(event: DragEvent, houseId: number, dropX?: number, dropY?: number, kundliId: number = 1) {
-    debugger
-    event.preventDefault();
-    console.log('Drop handler called for kundli:', kundliId, 'house:', houseId, 'at position:', dropX, dropY);
+    const raw = event.dataTransfer?.getData('planet');
+    if (!raw || houseId === 1) return;
 
-    const data = event.dataTransfer?.getData('planet');
-    console.log('Drop data:', data);
-    if (!data) return;
+    const planet: Planet = JSON.parse(raw);
 
-    if (houseId === 1) {
-      console.log('Drop not allowed in center');
-      return;
-    }
-    const planet: Planet = JSON.parse(data);
-    console.log('Parsed planet:', planet);
-
-    // Remove planet from ANY house in the SAME kundli only (move logic within kundli)
     for (let h = 1; h <= 12; h++) {
-      this.kundlis[kundliId][h] = this.kundlis[kundliId][h].filter(
-        p => p.planetId !== planet.id
-      );
+      this.kundlis[kundliId][h] =
+        this.kundlis[kundliId][h].filter(p => p.planetId !== planet.id);
     }
 
-    // Create new instance in the target house at the drop position
-    const instance: PlanetInstance = {
+    this.kundlis[kundliId][houseId].push({
       instanceId: crypto.randomUUID(),
       planetId: planet.id,
       name: planet.name,
       degree: 15,
-      x: dropX ?? 0,  // Use drop position or default to center
+      x: dropX ?? 0,
       y: dropY ?? 0
-    };
+    });
 
-    // Add to target kundli's house
-    this.kundlis[kundliId][houseId].push(instance);
-    console.log('Planet added to kundli:', kundliId, 'house:', houseId, 'Total:', this.kundlis[kundliId][houseId].length);
-
-    // Redraw to show the planet in the house
     this.drawBase(kundliId);
+  }
+
+  // -------------------------
+  // ZONES
+  // -------------------------
+
+  private getZones(): Zone[] {
+    return [
+      { id: 1, x: 150, y: 150, w: 100, h: 100 },
+      { id: 2, x: 150, y: 0, w: 100, h: 100 },
+      { id: 3, x: 300, y: 0, w: 100, h: 200 },
+      { id: 4, x: 300, y: 150, w: 100, h: 100 },
+      { id: 5, x: 300, y: 300, w: 100, h: 100 },
+      { id: 6, x: 150, y: 300, w: 100, h: 100 },
+      { id: 7, x: 0, y: 300, w: 100, h: 100 },
+      { id: 8, x: 0, y: 150, w: 100, h: 100 },
+      { id: 9, x: 0, y: 0, w: 100, h: 100 },
+      { id: 10, x: 250, y: 50, w: 50, h: 50 },
+      { id: 11, x: 250, y: 250, w: 50, h: 50 },
+      { id: 12, x: 50, y: 250, w: 50, h: 50 }
+    ];
   }
 }
