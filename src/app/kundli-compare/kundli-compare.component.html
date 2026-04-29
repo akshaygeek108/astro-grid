@@ -61,9 +61,15 @@
         </div>
     </div>
     <div class="pb-2">
-        <button mat-stroked-button color="warn" class="select-all-button" (click)="resetGrid()" class="reset-btn">
-            🔄 Reset Grid
-        </button>
+        <div class="filter-row">
+            <button mat-stroked-button color="warn" class="select-all-button" (click)="resetGrid()" class="reset-btn">
+                🔄 Reset Grid
+            </button>
+
+            <button-generate-pdf [container1]="container1" [container2]="container2" [kundli2Enabled]="kundli2Enabled"
+                [kundliTitle1]="kundliTitle1" [kundliTitle2]="kundliTitle2"></button-generate-pdf>
+
+        </div>
     </div>
     <!-- Reset Button -->
 

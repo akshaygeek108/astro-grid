@@ -390,4 +390,6 @@ export class VenusChartComponent {
 
     this.drawBase(kundliId);
   }
+
+
 }

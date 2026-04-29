@@ -38,8 +38,9 @@ import { VenusChartComponent } from './venus-chart/venus-chart.component';
 import { SuryaChakraChartComponent } from './surya-chakra-chart/surya-chakra-chart.component';
 import { GuruChakraComponent } from './guru-chakra/guru-chakra.component';
 import { KundliCompareComponent } from './kundli-compare/kundli-compare.component';
+import { GeneratePdfComponent } from './common/generate-pdf/generate-pdf.component';
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent, VenusChartComponent, SuryaChakraChartComponent, GuruChakraComponent, KundliCompareComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, MrituBhagComponent, PlanetDurationComponent, ChandraNavmanshaComponent, DasamsHouseComponent, KakshyaComponent, AgeCalculatorComponent, TamilNadiComponent, KundliPlayGroundComponent, VenusChartComponent, SuryaChakraChartComponent, GuruChakraComponent, KundliCompareComponent, GeneratePdfComponent],
   imports: [
     BrowserModule,
     DragDropModule,
