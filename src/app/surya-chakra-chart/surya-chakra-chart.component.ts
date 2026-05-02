@@ -17,12 +17,8 @@ interface PlanetInstance {
 
 interface Zone {
   id: number;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+  points: [number, number][];
 }
-
 @Component({
   selector: 'surya-chakra-chart',
   templateUrl: './surya-chakra-chart.component.html',
@@ -120,7 +116,6 @@ export class SuryaChakraChartComponent {
     this.drawGrid(svg, size);
     this.drawDiagonals(svg, size);
     this.drawCenter(svg, size, kundliId);
-    this.drawDropZones(svg, container, kundliId);
     this.renderPlanets(svg, kundliId);
   }
 
@@ -131,12 +126,64 @@ export class SuryaChakraChartComponent {
   private createSvg(container: ElementRef, size: number) {
     d3.select(container.nativeElement).selectAll('*').remove();
 
-    return d3.select(container.nativeElement)
+    const svg = d3.select(container.nativeElement)
       .append('svg')
       .attr('width', size)
       .attr('height', size)
       .attr('viewBox', `0 0 ${size} ${size}`)
       .style('background', '#fffafc');
+
+    // ✅ FULL DROP LAYER (fixes drop not working)
+    svg.append('rect')
+      .attr('width', size)
+      .attr('height', size)
+      .attr('fill', 'transparent')
+      .style('pointer-events', 'all')
+      .on('dragover', (event: any) => {
+        event.preventDefault(); // REQUIRED for drop
+      })
+      .on('drop', (event: any) => {
+        event.preventDefault();
+
+        const rect = (event.currentTarget as SVGRectElement)
+          .ownerSVGElement!
+          .getBoundingClientRect();
+
+        const dropX = event.clientX - rect.left;
+        const dropY = event.clientY - rect.top;
+
+        const raw = event.dataTransfer?.getData('planet');
+        if (!raw) return;
+
+        const planet: Planet = JSON.parse(raw);
+
+        this.handleDrop(planet, dropX, dropY, 1);
+      });
+
+    return svg;
+  }
+
+  private handleDrop(planet: Planet, x: number, y: number, kundliId: number) {
+
+    const zoneId = this.resolveZone(x, y);
+
+    // remove planet from all zones
+    Object.keys(this.kundlis[kundliId]).forEach(h => {
+      this.kundlis[kundliId][+h] =
+        this.kundlis[kundliId][+h].filter(p => p.planetId !== planet.id);
+    });
+
+    // add to correct zone
+    this.kundlis[kundliId][zoneId].push({
+      instanceId: crypto.randomUUID(),
+      planetId: planet.id,
+      name: planet.name,
+      degree: 15,
+      x,
+      y
+    });
+
+    this.drawBase(kundliId);
   }
 
   // -------------------------
@@ -256,32 +303,28 @@ export class SuryaChakraChartComponent {
   // DROP ZONES
   // -------------------------
 
-  private drawDropZones(svg: any, container: ElementRef, kundliId: number) {
-    const zones: Zone[] = this.getZones();
-    const self = this;
 
-    svg.selectAll('.dropzone')
-      .data(zones)
-      .enter()
-      .append('rect')
-      .attr('class', 'dropzone')
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
-      .attr('width', d => d.w)
-      .attr('height', d => d.h)
-      .attr('fill', 'transparent')
-      .on('dragover', (e: DragEvent) => e.preventDefault())
-      .on('drop', function (event: DragEvent, d: Zone) {
+  private resolveZone(x: number, y: number): number {
+    const size = this.SIZE;
+    const c = size / 3;
 
-        const svgElement = container.nativeElement.querySelector('svg');
-        const rect = svgElement.getBoundingClientRect();
+    const col = Math.floor(x / c); // 0,1,2
+    const row = Math.floor(y / c); // 0,1,2
 
-        const dropX = event.clientX - rect.left;
-        const dropY = event.clientY - rect.top;
+    // clamp safety
+    const safeCol = Math.max(0, Math.min(2, col));
+    const safeRow = Math.max(0, Math.min(2, row));
 
-        self.onDrop(event, d.id, dropX, dropY, kundliId);
-      });
+    // map grid → kundli zones
+    const zoneMap: number[][] = [
+      [10, 2, 3],
+      [9, 1, 5],
+      [8, 7, 6]
+    ];
+
+    return zoneMap[safeRow][safeCol];
   }
+
 
   // -------------------------
   // PLANETS RENDER
@@ -307,10 +350,11 @@ export class SuryaChakraChartComponent {
             p.y = event.y;
             data[zone.id][index] = p;
           });
-
+        const centroidX = zone.points.reduce((a, p) => a + p[0], 0) / zone.points.length;
+        const centroidY = zone.points.reduce((a, p) => a + p[1], 0) / zone.points.length;
         svg.append('text')
-          .attr('x', p.x || zone.x + zone.w / 2)
-          .attr('y', p.y || zone.y + zone.h / 2)
+          .attr('x', p.x || centroidX)
+          .attr('y', p.y || centroidY)
           .text(p.name)
           .style('cursor', 'grab')
           .call(drag);
@@ -322,18 +366,22 @@ export class SuryaChakraChartComponent {
   // DROP HANDLER
   // -------------------------
 
-  onDrop(event: DragEvent, houseId: number, dropX?: number, dropY?: number, kundliId: number = 1) {
+  onDrop(event: DragEvent, dropX?: number, dropY?: number, kundliId: number = 1) {
     const raw = event.dataTransfer?.getData('planet');
-    if (!raw || houseId === 1) return;
+    if (!raw) return;
 
     const planet: Planet = JSON.parse(raw);
 
-    for (let h = 1; h <= 12; h++) {
-      this.kundlis[kundliId][h] =
-        this.kundlis[kundliId][h].filter(p => p.planetId !== planet.id);
-    }
+    const zoneId = this.resolveZone(dropX!, dropY!);
 
-    this.kundlis[kundliId][houseId].push({
+    // remove from all zones
+    Object.keys(this.kundlis[kundliId]).forEach(h => {
+      this.kundlis[kundliId][+h] =
+        this.kundlis[kundliId][+h].filter(p => p.planetId !== planet.id);
+    });
+
+    // add to correct zone
+    this.kundlis[kundliId][zoneId].push({
       instanceId: crypto.randomUUID(),
       planetId: planet.id,
       name: planet.name,
@@ -350,19 +398,41 @@ export class SuryaChakraChartComponent {
   // -------------------------
 
   private getZones(): Zone[] {
+    const size = this.SIZE;
+    const c = size / 3;
+
     return [
-      { id: 1, x: 150, y: 150, w: 100, h: 100 },
-      { id: 2, x: 150, y: 0, w: 100, h: 100 },
-      { id: 3, x: 300, y: 0, w: 100, h: 200 },
-      { id: 4, x: 300, y: 150, w: 100, h: 100 },
-      { id: 5, x: 300, y: 300, w: 100, h: 100 },
-      { id: 6, x: 150, y: 300, w: 100, h: 100 },
-      { id: 7, x: 0, y: 300, w: 100, h: 100 },
-      { id: 8, x: 0, y: 150, w: 100, h: 100 },
-      { id: 9, x: 0, y: 0, w: 100, h: 100 },
-      { id: 10, x: 250, y: 50, w: 50, h: 50 },
-      { id: 11, x: 250, y: 250, w: 50, h: 50 },
-      { id: 12, x: 50, y: 250, w: 50, h: 50 }
+      // Center
+      { id: 1, points: [[c, c], [2 * c, c], [2 * c, 2 * c], [c, 2 * c]] },
+
+      // Top
+      { id: 2, points: [[c, 0], [2 * c, 0], [2 * c, c], [c, c]] },
+
+      // Top-right triangle
+      { id: 3, points: [[size, 0], [2 * c, c], [size, c]] },
+
+      // Right
+      { id: 4, points: [[2 * c, c], [size, c], [size, 2 * c], [2 * c, 2 * c]] },
+
+      // Bottom-right triangle
+      { id: 5, points: [[size, size], [2 * c, 2 * c], [size, 2 * c]] },
+
+      // Bottom
+      { id: 6, points: [[c, 2 * c], [2 * c, 2 * c], [2 * c, size], [c, size]] },
+
+      // Bottom-left triangle
+      { id: 7, points: [[0, size], [c, 2 * c], [0, 2 * c]] },
+
+      // Left
+      { id: 8, points: [[0, c], [c, c], [c, 2 * c], [0, 2 * c]] },
+
+      // Top-left triangle
+      { id: 9, points: [[0, 0], [c, c], [0, c]] },
+
+      // Small inner zones (optional tuning)
+      { id: 10, points: [[2 * c, c / 2], [2 * c + c / 2, c], [2 * c, 1.5 * c], [1.5 * c, c]] },
+      { id: 11, points: [[2 * c, 2.5 * c], [2 * c + c / 2, 2 * c], [2 * c, 1.5 * c], [1.5 * c, 2 * c]] },
+      { id: 12, points: [[c / 2, 2 * c], [c, 1.5 * c], [1.5 * c, 2 * c], [c, 2.5 * c]] }
     ];
   }
 }
