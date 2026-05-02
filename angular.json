@@ -5,7 +5,7 @@
   "projects": {
     "astro-app": {
       "projectType": "application",
-      "root": "src",
+      "root": "",
       "sourceRoot": "src",
       "architect": {
         "build": {
@@ -16,6 +16,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "sourceMap": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -30,18 +31,35 @@
           "configurations": {
             "production": {
               "budgets": [],
-              "baseHref": "/astro-grid/"
+              "baseHref": "/astro-grid/",
+              "sourceMap": false,
+              "optimization": true,
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "astro-app:build"
-          }
+          "configurations": {
+            "production": {
+              "browserTarget": "astro-app:build:production"
+            },
+            "development": {
+              "browserTarget": "astro-app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }
-  },
-  "defaultProject": "astro-app"
+  }
 }

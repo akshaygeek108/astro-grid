@@ -2,13 +2,14 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "rootDir": "./src",
     "sourceMap": true,
+    "inlineSources": true,
     "declaration": false,
-    "downlevelIteration": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,
     "module": "es2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "es2020",
     "typeRoots": [

@@ -1,5 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
+import * as XLSX from 'xlsx';
 
 interface Planet {
   id: string;
@@ -13,6 +14,7 @@ interface PlanetInstance {
   degree: number;
   x: number;
   y: number;
+  houseNumber?: string;
 }
 
 @Component({
@@ -61,7 +63,7 @@ export class GuruChakraComponent implements AfterViewInit {
 
   private createEmptyHouses() {
     const obj: Record<number, PlanetInstance[]> = {};
-    for (let i = 1; i <= 12; i++) obj[i] = [];
+    for (let i = 1; i <= 13; i++) obj[i] = [];
     return obj;
   }
 
@@ -168,8 +170,8 @@ export class GuruChakraComponent implements AfterViewInit {
       .attr('font-size', '20px')
       .attr('fill', '#c2185b')
       .attr('text-anchor', 'middle')
-    .attr('dominant-baseline', 'middle')
-    .style('pointer-events', 'none')
+      .attr('dominant-baseline', 'middle')
+      .style('pointer-events', 'none')
       .text(this.centerLabels[kundliId] || '');
 
     // house numbers
@@ -180,16 +182,19 @@ export class GuruChakraComponent implements AfterViewInit {
       9, 8, 7, 6
     ];
 
+    const houseValueMap: Record<number, string> = {};
     houseValues.forEach((val, i) => {
       if (!val) return;
       const row = Math.floor(i / 4);
       const col = i % 4;
-
+      const key = row * 4 + col; // same index you used
+      houseValueMap[key] = val.toString();
       svg.append('text')
         .attr('x', col * cell + cell - 6)
         .attr('y', row * cell + cell - 4)
         .attr('text-anchor', 'end')
         .attr('font-size', '12px')
+        .attr('font-color', '#fa4424')
         .attr('fill', '#5e0d35')
         .text(val);
     });
@@ -204,7 +209,7 @@ export class GuruChakraComponent implements AfterViewInit {
         const txt = prompt('Enter Rashi text (max 20 chars):');
         if (txt !== null) {
           const trimmed = txt.length > 20 ? txt.slice(0, 20) : txt;
-          
+
           this.centerLabels[kundliId] = txt;
           this.drawBase(kundliId);
         }
@@ -213,21 +218,25 @@ export class GuruChakraComponent implements AfterViewInit {
 
     const houseZones = [
       { id: 1, x: 150, y: 150, w: 100, h: 100 },
-      { id: 2, x: 150, y: 0, w: 100, h: 100 },
-      { id: 3, x: 300, y: 0, w: 100, h: 200 },
-      { id: 4, x: 300, y: 150, w: 100, h: 100 },
-      { id: 5, x: 300, y: 300, w: 100, h: 100 },
-      { id: 6, x: 150, y: 300, w: 100, h: 100 },
-      { id: 7, x: 0, y: 300, w: 100, h: 100 },
-      { id: 8, x: 0, y: 150, w: 100, h: 100 },
-      { id: 9, x: 0, y: 0, w: 100, h: 100 },
-      { id: 10, x: 250, y: 50, w: 50, h: 50 },
-      { id: 11, x: 250, y: 250, w: 50, h: 50 },
-      { id: 12, x: 50, y: 250, w: 50, h: 50 }
+      { id: 2, x: 100, y: 0, w: 100, h: 100 },
+      { id: 3, x: 200, y: 0, w: 100, h: 100 },
+      { id: 4, x: 300, y: 0, w: 100, h: 100 },
+      { id: 5, x: 300, y: 100, w: 100, h: 100 },
+      { id: 6, x: 300, y: 200, w: 100, h: 100 },
+      { id: 7, x: 300, y: 300, w: 100, h: 100 },
+      { id: 8, x: 200, y: 300, w: 100, h: 100 },
+      { id: 9, x: 100, y: 300, w: 100, h: 100 },
+      { id: 10, x: 0, y: 300, w: 100, h: 100 },
+      { id: 11, x: 0, y: 200, w: 100, h: 100 },
+      { id: 12, x: 0, y: 100, w: 100, h: 100 },
+      { id: 13, x: 0, y: 0, w: 100, h: 100 }
     ];
-
+    const enrichedZones = houseZones.map((z, i) => ({
+      ...z,
+      houseValue: houseValues[i] || null
+    }));
     svg.selectAll('.dropzone')
-      .data(houseZones)
+      .data(enrichedZones)
       .enter()
       .append('rect')
       .attr('class', 'dropzone')
@@ -241,7 +250,9 @@ export class GuruChakraComponent implements AfterViewInit {
       .on('drop', (event: DragEvent, d: any) => {
         event.preventDefault();
 
-        const rect = (container.nativeElement.querySelector('svg') as SVGElement).getBoundingClientRect();
+        const rect = (container.nativeElement.querySelector('svg') as SVGElement)
+          .getBoundingClientRect();
+
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
@@ -313,8 +324,8 @@ export class GuruChakraComponent implements AfterViewInit {
     if (!data) return;
 
     const planet: Planet = JSON.parse(data);
-
-    for (let i = 1; i <= 12; i++) {
+    console.log('Dropped planet:', planet, 'houseId:', houseId);
+    for (let i = 1; i <= 13; i++) {
       this.kundlis[kundliId][i] =
         this.kundlis[kundliId][i].filter(p => p.planetId !== planet.id);
     }
@@ -325,9 +336,69 @@ export class GuruChakraComponent implements AfterViewInit {
       name: planet.name,
       degree: 15,
       x: x ?? 0,
-      y: y ?? 0
+      y: y ?? 0,
+      houseNumber: (houseId - 1).toString()
     });
 
     this.drawBase(kundliId);
+  }
+
+  generateExcelSideBySide() {
+
+    const data1 = this.kundlis[1];
+    const data2 = this.kundlis[2];
+
+    const rows: any[] = [];
+
+    for (let house = 1; house <= 12; house++) {
+
+      const planets1 = data1[house] || [];
+      const planets2 = data2[house] || [];
+
+      const maxLen = Math.max(planets1.length, planets2.length, 1);
+
+      for (let i = 0; i < maxLen; i++) {
+
+        const p1 = planets1[i];
+        const p2 = planets2[i];
+
+        rows.push({
+          House: house,
+
+          // 🔵 Kundli 1 (Left Side)
+          K1_Planet: p1 ? p1.name : '',
+
+          // 🟣 Kundli 2 (Right Side)
+          K2_Planet: p2 ? p2.name : '',
+        });
+      }
+    }
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+
+    // optional: widen columns for better readability
+    worksheet['!cols'] = [
+      { wch: 8 },   // House
+      { wch: 12 },  // K1 Planet
+      { wch: 12 },
+      { wch: 10 },
+      { wch: 8 },
+      { wch: 8 },
+      { wch: 12 },  // K2 Planet
+      { wch: 12 },
+      { wch: 10 },
+      { wch: 8 },
+      { wch: 8 }
+    ];
+
+    const workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Kundli Export'
+    );
+
+    XLSX.writeFile(workbook, 'KundliExport.xlsx');
   }
 }
